@@ -1,51 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ganglia Technologies</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/gh/thebabydino/fonts@latest/satoshi.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div class="hero-container">
+      <div class="background-image"></div>
+      <div id="canvas-container"></div>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BQP - Next-Gen Simulations</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
+      <div class="content-overlay">
+        <nav class="navbar">
+          <div class="logo">
+            <img
+              src="log.png"
+              alt="Ganglia Technologies Logo"
+              class="logo-image"
+            />
+          </div>
+          <div class="navbar-right">
+            <ul class="nav-links">
+              <li><a href="#story">Our Story</a></li>
+              <li><a href="#products">Products</a></li>
+              <li><a href="#services">Services</a></li>
+              <li><a href="#blog">Blog</a></li>
+              <li><a href="#awards">Awards & News</a></li>
+              <li><a href="#research">Research</a></li>
+            </ul>
+            <button class="get-started-btn">Get Started</button>
+          </div>
+        </nav>
 
-<body>
-  <nav>
-    <div class="logo">
-        <img src="log.png" height="100" width="250">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-title">
+              <span class="unsatisfied">Unsatisfied</span> with<br />
+              <span class="existing">Existing Technology</span>
+            </h1>
+            <p class="hero-subtitle">
+              Revolutionising AI healthcare with accessible, efficient, and
+              future-ready solutions.
+            </p>
+            <button class="learn-more-btn">Learn More</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="supporter-band">
+        <div class="supporter-track">
+          <img src="1.png" alt="Supporter 1" class="supporter-logo" />
+          <img src="2.png" alt="Supporter 2" class="supporter-logo" />
+          <img src="3.png" alt="Supporter 3" class="supporter-logo" />
+          <img src="4.png" alt="Supporter 4" class="supporter-logo" />
+          <img src="5.png" alt="Supporter 5" class="supporter-logo" />
+
+          <img src="1.png" alt="Supporter 1" class="supporter-logo" />
+          <img src="2.png" alt="Supporter 2" class="supporter-logo" />
+          <img src="3.png" alt="Supporter 3" class="supporter-logo" />
+          <img src="4.png" alt="Supporter 4" class="supporter-logo" />
+          <img src="5.png" alt="Supporter 5" class="supporter-logo" />
+
+          <img src="1.png" alt="Supporter 1" class="supporter-logo" />
+          <img src="2.png" alt="Supporter 2" class="supporter-logo" />
+          <img src="3.png" alt="Supporter 3" class="supporter-logo" />
+          <img src="4.png" alt="Supporter 4" class="supporter-logo" />
+          <img src="5.png" alt="Supporter 5" class="supporter-logo" />
+        </div>
+      </div>
     </div>
-    <ul>
-      <li><a href="#">Product</a></li>
-      <li><a href="#">Our Story</a></li>
-      <li><a href="#">Resources</a></li>
-      <li><a href="#">Results</a></li>
-    </ul>
-    <a href="#" class="get-started">Get Started</a>
-  </nav>
 
-  <div class="ticker">
-    BQP sponsors SAE Aerothon 2025 • BQP Secures $100K from Mojave Aerospace Accelerator Fund
-  </div>
-
-  <section class="hero">
-    <div class="hero-text">
-      <h1><span class="highlight">Unsatisifed with the Existing Technology</span></h1>
-<h1>Powered By Quantum</h1>
-      <p>Solve the toughest <span class="highlight-alt">Computational</span> Simulations</p>
-      <button class="explore-btn">Explore</button>
-    </div>
- <div class="hero-image">
-  <video autoplay muted loop playsinline>
-    <source src="sim.mp4" type="video/mp4" >
-    Your browser does not support the video tag.
-  </video>
-</div>
-
-  <footer class="partners">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/NVIDIA_logo.svg/2560px-NVIDIA_logo.svg.png" alt="NVIDIA">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/IBM_logo.svg/2560px-IBM_logo.svg.png" alt="IBM">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Tech_Mahindra_New_Logo.svg/2560px-Tech_Mahindra_New_Logo.svg.png" alt="Tech Mahindra">
-  </footer>
-</body>
-
+    <script src="script.js"></script>
+  </body>
 </html>
