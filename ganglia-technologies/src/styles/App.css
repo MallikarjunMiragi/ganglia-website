@@ -1,3 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://cdn.jsdelivr.net/gh/thebabydino/fonts@latest/satoshi.css");
+
 * {
   margin: 0;
   padding: 0;
@@ -9,6 +12,11 @@ body {
   overflow-x: hidden;
   background: #000;
   color: #fff;
+}
+
+.App {
+  width: 100%;
+  min-height: 100vh;
 }
 
 .hero-container {
@@ -24,20 +32,21 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("generated-image2.png");
+  background-image: url("../assets/generated-image2.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   z-index: 0;
 }
 
-#canvas-container {
+.canvas-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
+  pointer-events: none;
 }
 
 .content-overlay {
@@ -100,7 +109,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "satoshi", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .get-started-btn:hover {
@@ -120,7 +129,6 @@ body {
 .hero-text {
   max-width: 600px;
   margin-bottom: 100px;
-  border: #f1ebeb00 solid 2px;
 }
 
 .hero-title {
@@ -129,10 +137,6 @@ body {
   line-height: 1.1;
   margin-bottom: 50px;
   letter-spacing: -1px;
-}
-
-.hero-title .unsatisfied {
-  color: #fef155;
 }
 
 .hero-title .existing {
@@ -157,7 +161,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "satoshi", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .learn-more-btn:hover {
@@ -202,6 +206,54 @@ body {
   }
   100% {
     transform: translateX(-100%);
+  }
+}
+
+/* New Advanced Glitch Effects */
+.hero-title .unsatisfied {
+  color: #fef155;
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+}
+
+.unsatisfied-glitch {
+  color: #fef155;
+  position: relative;
+  display: inline-block;
+}
+
+.unsatisfied-glitch.is-glitching {
+  animation: textFlicker 0.15s infinite alternate;
+}
+
+.glitch-letter {
+  display: inline-block;
+  position: relative;
+  transition: opacity 50ms ease;
+}
+
+.glitch-letter.invisible {
+  opacity: 0 !important;
+}
+
+.glitch-letter:nth-child(odd) {
+  animation-delay: 50ms;
+}
+
+.glitch-letter:nth-child(even) {
+  animation-delay: 100ms;
+}
+
+@keyframes textFlicker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -263,99 +315,9 @@ body {
     padding: 14px 28px;
     font-size: 14px;
   }
-}
-/* Typewriter effect */
-#typewriter {
-  border-right: 2px solid #fef155;
-  white-space: nowrap;
-  overflow: hidden;
-  display: inline-block;
-  width: 0;
-  animation: typing 3s steps(30, end) forwards, blink 0.7s step-end infinite;
-}
 
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 15ch;
-  } /* adjust depending on text */
-}
-
-@keyframes blink {
-  50% {
-    border-color: transparent;
-  }
-}
-
-/* Glitch effect */
-#glitch {
-  color: #fff;
-  text-shadow: 0 0 2px #0ff, 0 0 10px #0ff, 0 0 20px #0ff;
-  position: relative;
-  opacity: 0;
-  animation: fadeInGlitch 1s ease forwards;
-  animation-delay: 3.5s;
-}
-
-@keyframes fadeInGlitch {
-  0% {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(5px);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-#glitch::before,
-#glitch::after {
-  content: attr(data-text);
-  position: absolute;
-  left: 0;
-  width: 100%;
-  color: #fff;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-}
-
-#glitch::before {
-  text-shadow: -2px 0 red;
-  animation: glitch-anim 1s infinite linear alternate-reverse;
-}
-
-#glitch::after {
-  text-shadow: 2px 0 blue;
-  animation: glitch-anim2 1s infinite linear alternate-reverse;
-}
-
-@keyframes glitch-anim {
-  0% {
-    clip: rect(42px, 9999px, 44px, 0);
-  }
-  50% {
-    clip: rect(12px, 9999px, 14px, 0);
-    transform: translate(-2px, -2px);
-  }
-  100% {
-    clip: rect(72px, 9999px, 74px, 0);
-  }
-}
-
-@keyframes glitch-anim2 {
-  0% {
-    clip: rect(22px, 9999px, 24px, 0);
-  }
-  50% {
-    clip: rect(32px, 9999px, 34px, 0);
-    transform: translate(2px, 2px);
-  }
-  100% {
-    clip: rect(62px, 9999px, 64px, 0);
+  .learn-more-btn {
+    padding: 14px 28px;
+    font-size: 14px;
   }
 }
