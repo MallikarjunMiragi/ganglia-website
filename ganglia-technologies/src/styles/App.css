@@ -57,73 +57,6 @@ body {
   flex-direction: column;
 }
 
-/* Updated Navbar Styles */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 60px;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  z-index: 100;
-  background: transparent;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 40px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo-image {
-  height: 115px;
-  width: auto;
-}
-
-.nav-links {
-  display: flex;
-  gap: 40px;
-  list-style: none;
-}
-
-.nav-links a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 400;
-  font-size: 16px;
-  transition: color 0.3s ease;
-}
-
-.nav-links a:hover {
-  color: #fef155;
-}
-
-.get-started-btn {
-  background: #fef155;
-  color: #000;
-  border: none;
-  padding: 18px 36px;
-  font-size: 16px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Inter", sans-serif;
-}
-
-.get-started-btn:hover {
-  background: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(254, 241, 85, 0.3);
-}
-
 .hero-content {
   flex: 1;
   display: flex;
@@ -214,7 +147,7 @@ body {
   }
 }
 
-/* New Advanced Glitch Effects */
+/* Advanced Glitch Effects */
 .hero-title .unsatisfied {
   color: #fef155;
   position: relative;
@@ -262,44 +195,8 @@ body {
   }
 }
 
-/* Mobile Responsive */
+/* Mobile Responsive for Hero Content */
 @media (max-width: 768px) {
-  /* Mobile navbar hide/show behavior */
-  .navbar-visible {
-    transform: translateY(0);
-  }
-
-  .navbar-hidden {
-    transform: translateY(-100%);
-  }
-
-  .navbar {
-    padding: 20px 30px;
-    background: rgba(
-      0,
-      0,
-      0,
-      0.9
-    ); /* Add semi-transparent background for mobile */
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  /* Keep the logo at normal size but adjust navbar layout */
-  .navbar-right {
-    gap: 20px;
-  }
-
-  .nav-links {
-    gap: 20px;
-    font-size: 14px;
-  }
-
-  .get-started-btn {
-    padding: 12px 24px;
-    font-size: 14px;
-  }
-
   .hero-content {
     padding: 0 30px;
     margin-top: 80px; /* Add margin to account for fixed navbar */
@@ -312,39 +209,9 @@ body {
   .hero-subtitle {
     font-size: 18px;
   }
-
-  .logo-image {
-    height: 80px; /* Reduce logo size slightly on mobile */
-  }
 }
 
 @media (max-width: 480px) {
-  .navbar {
-    padding: 15px 20px;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
-
-  .navbar-right {
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-    align-items: center;
-  }
-
-  .nav-links {
-    gap: 15px;
-    font-size: 13px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .get-started-btn {
-    padding: 10px 20px;
-    font-size: 13px;
-  }
-
   .hero-content {
     padding: 0 20px;
     margin-top: 120px; /* More margin for stacked mobile navbar */
@@ -361,16 +228,5 @@ body {
   .learn-more-btn {
     padding: 14px 28px;
     font-size: 14px;
-  }
-
-  .logo-image {
-    height: 60px; /* Further reduce logo size on small screens */
-  }
-}
-
-/* Desktop - navbar always visible */
-@media (min-width: 769px) {
-  .navbar {
-    transform: translateY(0) !important;
   }
 }

@@ -3,12 +3,10 @@
   position: relative;
   width: 100%;
   padding: 60px 0;
-  background-image: url("../assets/productsbg.png");
-  background-size: cover;
-  background-position: center bottom; /* key change: align lower half */
-  background-repeat: no-repeat;
+  background: #000426;
   overflow: hidden;
   margin-top: -1px;
+  min-height: auto; /* Changed from 400px to auto */
 }
 
 .stats-background {
@@ -135,15 +133,21 @@
   }
 }
 
-/* Mobile 2x2 Grid - Full Width */
+/* Mobile 2x2 Grid - Solid Background */
 @media (max-width: 768px) {
   .stats-strip {
-    padding: 40px 0;
+    padding: 30px 0; /* Reduced padding */
+    background: #000426;
+    min-height: auto; /* Remove fixed height */
+    width: 100%;
+    margin-left: 0;
   }
 
   .stats-container {
     padding: 0 20px;
-    max-width: none; /* Allow full width usage */
+    max-width: 1400px; /* Restore max-width */
+    width: 100%;
+    margin: 0 auto; /* Center the container */
   }
 
   .stats-grid {
@@ -151,11 +155,18 @@
     gap: 0;
     border-radius: 15px;
     width: 100%;
+    /* Enhanced mobile grid background */
+    background: linear-gradient(
+      135deg,
+      rgba(29, 31, 55, 0.9) 0%,
+      rgba(29, 31, 55, 0.95) 100%
+    );
+    backdrop-filter: blur(20px);
   }
 
   .stat-card {
-    padding: 35px 20px;
-    min-height: 140px; /* Ensure consistent height */
+    padding: 25px 15px; /* Reduced padding */
+    min-height: 120px; /* Reduced height */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -163,17 +174,17 @@
   }
 
   .stat-number {
-    font-size: 36px;
-    margin-bottom: 8px;
+    font-size: 32px; /* Reduced size */
+    margin-bottom: 6px;
   }
 
   .stat-icon {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 20px; /* Reduced size */
+    margin-bottom: 8px;
   }
 
   .stat-label {
-    font-size: 12px;
+    font-size: 11px; /* Reduced size */
     line-height: 1.2;
   }
 
@@ -210,33 +221,45 @@
   }
 }
 
-/* Very small screens - keep 2x2 but adjust sizing */
+/* Very small screens - Solid Background */
 @media (max-width: 480px) {
+  .stats-strip {
+    background: #000426;
+    min-height: auto; /* Remove fixed height */
+    padding: 20px 0; /* Further reduced padding */
+  }
+
   .stats-container {
     padding: 0 15px;
   }
 
   .stats-grid {
     border-radius: 12px;
+    /* Enhanced background for small screens */
+    background: linear-gradient(
+      135deg,
+      rgba(29, 31, 55, 0.92) 0%,
+      rgba(29, 31, 55, 0.97) 100%
+    );
   }
 
   .stat-card {
-    padding: 25px 15px;
-    min-height: 120px;
+    padding: 20px 12px; /* Further reduced padding */
+    min-height: 100px; /* Further reduced height */
   }
 
   .stat-number {
-    font-size: 28px;
+    font-size: 24px; /* Further reduced size */
     letter-spacing: -1px;
   }
 
   .stat-icon {
-    font-size: 20px;
-    margin-bottom: 8px;
+    font-size: 16px; /* Further reduced size */
+    margin-bottom: 6px;
   }
 
   .stat-label {
-    font-size: 10px;
+    font-size: 9px; /* Further reduced size */
     letter-spacing: 0.3px;
   }
 
@@ -272,22 +295,57 @@
   }
 }
 
-/* Tablet size adjustment */
-@media (min-width: 481px) and (max-width: 968px) {
-  .stats-grid {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 360px) {
+  .stats-strip {
+    padding: 15px 0; /* Minimal padding */
   }
 
   .stat-card {
-    padding: 40px 25px;
+    padding: 15px 8px; /* Minimal padding */
+    min-height: 90px; /* Minimal height */
   }
 
   .stat-number {
-    font-size: 48px;
+    font-size: 20px; /* Minimal size */
+  }
+
+  .stat-icon {
+    font-size: 14px; /* Minimal size */
+    margin-bottom: 4px;
   }
 
   .stat-label {
-    font-size: 14px;
+    font-size: 8px; /* Minimal size */
+  }
+}
+
+/* Tablet size adjustment - Solid Background */
+@media (min-width: 481px) and (max-width: 968px) {
+  .stats-strip {
+    background: #000426;
+    min-height: auto; /* Remove fixed height */
+    padding: 35px 0; /* Reduced padding */
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    background: linear-gradient(
+      135deg,
+      rgba(29, 31, 55, 0.88) 0%,
+      rgba(29, 31, 55, 0.93) 100%
+    );
+  }
+
+  .stat-card {
+    padding: 30px 20px; /* Reduced padding */
+  }
+
+  .stat-number {
+    font-size: 40px; /* Reduced size */
+  }
+
+  .stat-label {
+    font-size: 13px; /* Reduced size */
   }
 
   /* Adjust dividers for 2x2 grid */
@@ -318,5 +376,21 @@
       rgba(255, 255, 255, 0.1) 80%,
       transparent 100%
     );
+  }
+}
+
+/* Landscape mobile optimization */
+@media (max-width: 768px) and (orientation: landscape) {
+  .stats-strip {
+    background: #000426;
+    min-height: auto; /* Remove fixed height */
+    padding: 25px 0; /* Reduced padding */
+  }
+}
+
+/* For very wide screens */
+@media (min-width: 1920px) {
+  .stats-strip {
+    background: #000426;
   }
 }

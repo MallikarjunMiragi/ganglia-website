@@ -1,0 +1,149 @@
+/* Navbar.css - Complete navbar styling with z-index fix */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 1000; /* High z-index to stay above all other elements */
+  background: transparent;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  height: 115px;
+  width: auto;
+}
+
+.nav-links {
+  display: flex;
+  gap: 40px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #fef155;
+}
+
+.get-started-btn {
+  background: #fef155;
+  color: #000;
+  border: none;
+  padding: 18px 36px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Inter", sans-serif;
+}
+
+.get-started-btn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(254, 241, 85, 0.3);
+}
+
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+  /* Mobile navbar hide/show behavior */
+  .navbar-visible {
+    transform: translateY(0);
+    z-index: 1000; /* Ensure mobile visible state has high z-index */
+  }
+
+  .navbar-hidden {
+    transform: translateY(-100%);
+    z-index: 1000; /* Ensure mobile hidden state has high z-index */
+  }
+
+  .navbar {
+    padding: 20px 30px;
+
+    backdrop-filter: blur(10px);
+
+    z-index: 1000; /* Maintain high z-index on mobile */
+  }
+
+  /* Keep the logo at normal size but adjust navbar layout */
+  .navbar-right {
+    gap: 20px;
+  }
+
+  .nav-links {
+    gap: 20px;
+    font-size: 14px;
+  }
+
+  .get-started-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .logo-image {
+    height: 80px; /* Reduce logo size slightly on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    z-index: 1000; /* Maintain high z-index on small mobile */
+  }
+
+  .navbar-right {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav-links {
+    gap: 15px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .get-started-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+
+  .logo-image {
+    height: 60px; /* Further reduce logo size on small screens */
+  }
+}
+
+/* Desktop - navbar always visible with high z-index */
+@media (min-width: 769px) {
+  .navbar {
+    transform: translateY(0) !important;
+    z-index: 1000; /* Ensure desktop navbar stays on top */
+  }
+}

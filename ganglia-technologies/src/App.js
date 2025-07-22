@@ -6,9 +6,10 @@ import SupporterBand from './components/SupporterBand';
 import AboutUsSection from './components/AboutUsSection';
 import ProductsSection from './components/ProductsSection';
 import StatsStrip from './components/StatsStrip';
-import './styles/App.css';
 import Services from './components/Services';
-
+import TeamSection from './components/TeamSection';
+import CertificationsSection from './components/CertificationsSection';
+import './styles/App.css'; // Make sure this path is correct for your new App.css
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
       <ProductsSection />
       <StatsStrip />
       <Services />
+      <TeamSection />
+      <CertificationsSection />
+
     </div>
   );
 }

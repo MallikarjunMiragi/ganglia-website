@@ -5,7 +5,7 @@ html {
 .services-section {
   position: relative;
   width: 100%;
-  min-height: 900px;
+  min-height: auto; /* Changed from 900px to auto */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background: url("../assets/servicesbg.png") center center/cover no-repeat;
+  background: url("../assets/servicesbg.png") center 15%/120% no-repeat;
   opacity: 1;
   z-index: 0;
   will-change: transform;
@@ -154,7 +154,7 @@ html {
 /* Improved Scroll-Responsive Animation Styles */
 .scroll-responsive-card {
   /* Remove CSS transitions to let JavaScript handle all animation */
-  transition: none;
+  transition: none !important;
   will-change: transform, opacity;
   /* Initial state - cards start from corners */
   transform: translate(-60vw, -60vh) scale(0.6) rotate(-8deg);
@@ -162,24 +162,50 @@ html {
   /* Ensure smooth rendering */
   transform-origin: center center;
   transform-style: preserve-3d;
+  /* Force hardware acceleration */
+  backface-visibility: hidden;
+  /* Ensure proper stacking context */
+  z-index: 1;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
+  .services-section {
+    min-height: auto; /* Ensure no fixed height */
+    padding: 60px 0 40px 0; /* Reduced padding */
+  }
+
+  .services-bg {
+    /* Mobile: Zoom out more while keeping top position moved up */
+    background: url("../assets/servicesbg.png") center -5%/140% no-repeat;
+  }
+
+  .services-container {
+    margin-top: 20px; /* Reduced margin */
+  }
+
   .services-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    gap: 40px 0;
+    /* Keep 2x2 grid on mobile */
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
   }
 
   .service-card {
+    /* Stack content vertically and make cards smaller */
     flex-direction: column;
-    align-items: flex-start;
-    padding: 36px 24px;
+    align-items: center;
+    text-align: center;
+    padding: 20px 16px;
+    min-height: 200px;
+    border-radius: 20px;
+    /* Ensure proper animation inheritance */
+    position: relative;
+    z-index: 1;
   }
 
   .service-card:hover {
-    transform: translateY(-8px) scale(1.01) !important;
+    transform: translateY(-4px) scale(1.02) !important;
   }
 
   .service-card.reverse {
@@ -193,60 +219,135 @@ html {
 
   .service-card.reverse .service-img {
     margin-left: 0;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
   }
 
   .service-img {
+    width: 60px;
+    height: 60px;
     margin-right: 0;
-    margin-bottom: 24px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+
+  .service-title {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+
+  .service-desc {
+    font-size: 13px;
+    line-height: 1.4;
   }
 
   .top-row {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 
   .services-heading {
-    font-size: 36px;
-    margin-bottom: 60px;
+    font-size: 32px;
+    margin-bottom: 30px; /* Reduced margin */
   }
 
   /* Mobile scroll-responsive adjustments */
   .scroll-responsive-card {
+    transition: none !important;
     transform: translate(-40vw, -40vh) scale(0.7) rotate(-6deg);
     opacity: 0.4;
+    /* Ensure all cards are properly positioned for animation */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    z-index: 1;
   }
 }
 
 @media (max-width: 600px) {
+  .services-section {
+    padding: 40px 0 30px 0; /* Further reduced padding */
+  }
+
+  .services-bg {
+    /* Very small screens: Even more zoom out with top position moved up */
+    background: url("../assets/servicesbg.png") center -3%/160% no-repeat;
+  }
+
   .services-container {
-    padding: 0 10px;
+    padding: 0 15px;
+    margin-top: 15px; /* Reduced margin */
+  }
+
+  .services-grid {
+    gap: 15px;
+  }
+
+  .service-card {
+    padding: 16px 12px;
+    min-height: 180px;
+    border-radius: 16px;
   }
 
   .services-heading {
-    font-size: 28px;
-    margin-bottom: 40px;
+    font-size: 26px;
+    margin-bottom: 20px; /* Reduced margin */
   }
 
   .service-title {
-    font-size: 24px;
+    font-size: 16px;
+    margin-bottom: 6px;
   }
 
   .service-desc {
-    font-size: 16px;
+    font-size: 12px;
   }
 
   .service-img {
-    width: 120px;
-    height: 120px;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+    border-radius: 10px;
   }
 
   .service-card:hover {
-    transform: translateY(-6px) scale(1.01) !important;
+    transform: translateY(-3px) scale(1.01) !important;
   }
 
   /* Further reduced movement on mobile */
   .scroll-responsive-card {
+    transition: none !important;
     transform: translate(-30vw, -30vh) scale(0.75) rotate(-4deg);
     opacity: 0.5;
+    /* Enhanced animation support for small screens */
+    will-change: transform, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    z-index: 1;
+    /* Ensure proper layering */
+    position: relative;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-section {
+    padding: 30px 0 20px 0; /* Minimal padding */
+  }
+
+  .services-container {
+    margin-top: 10px; /* Minimal margin */
+  }
+
+  .services-heading {
+    margin-bottom: 15px; /* Minimal margin */
+  }
+}
+
+@media (max-width: 360px) {
+  .services-section {
+    padding: 25px 0 15px 0; /* Extra minimal padding */
+  }
+
+  .services-heading {
+    font-size: 24px;
+    margin-bottom: 12px; /* Extra minimal margin */
   }
 }
