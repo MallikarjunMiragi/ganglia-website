@@ -57,13 +57,19 @@ body {
   flex-direction: column;
 }
 
+/* ...existing code... */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 30px 60px;
   width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  background: transparent; /* Ensures navbar background covers content when sticky */
 }
+/* ...existing code... */
 
 .navbar-right {
   display: flex;
@@ -176,11 +182,11 @@ body {
   left: 0;
   width: 100%;
   height: 100px;
-  background: #000;
+  backface-visibility: visible;
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
-  border-top: 1px solid #333;
+
   z-index: 2;
 }
 

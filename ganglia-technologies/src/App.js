@@ -3,6 +3,8 @@ import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
 import ParticleBackground from './components/ParticleBackground';
 import SupporterBand from './components/SupporterBand';
+import AboutUsSection from './components/AboutUsSection';
+import ProductsSection from './components/ProductsSection';
 import './styles/App.css';
 
 function App() {
@@ -15,10 +17,12 @@ function App() {
         <div className="content-overlay">
           <Navbar />
           <HeroSection />
+          <SupporterBand />
         </div>
-        
-        <SupporterBand />
       </div>
+      
+      <AboutUsSection />
+      <ProductsSection />
     </div>
   );
 }
