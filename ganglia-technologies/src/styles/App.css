@@ -57,7 +57,7 @@ body {
   flex-direction: column;
 }
 
-/* ...existing code... */
+/* Updated Navbar Styles */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -67,9 +67,9 @@ body {
   position: fixed;
   top: 0;
   z-index: 100;
-  background: transparent; /* Ensures navbar background covers content when sticky */
+  background: transparent;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* ...existing code... */
 
 .navbar-right {
   display: flex;
@@ -186,7 +186,6 @@ body {
   overflow: hidden;
   white-space: nowrap;
   box-sizing: border-box;
-
   z-index: 2;
 }
 
@@ -265,25 +264,45 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 20px 30px;
-    flex-direction: column;
-    gap: 20px;
+  /* Mobile navbar hide/show behavior */
+  .navbar-visible {
+    transform: translateY(0);
   }
 
+  .navbar-hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar {
+    padding: 20px 30px;
+    background: rgba(
+      0,
+      0,
+      0,
+      0.9
+    ); /* Add semi-transparent background for mobile */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Keep the logo at normal size but adjust navbar layout */
   .navbar-right {
-    flex-direction: column;
     gap: 20px;
   }
 
   .nav-links {
     gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    font-size: 14px;
+  }
+
+  .get-started-btn {
+    padding: 12px 24px;
+    font-size: 14px;
   }
 
   .hero-content {
     padding: 0 30px;
+    margin-top: 80px; /* Add margin to account for fixed navbar */
   }
 
   .hero-title {
@@ -293,15 +312,42 @@ body {
   .hero-subtitle {
     font-size: 18px;
   }
+
+  .logo-image {
+    height: 80px; /* Reduce logo size slightly on mobile */
+  }
 }
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 20px;
+    padding: 15px 20px;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .navbar-right {
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+  }
+
+  .nav-links {
+    gap: 15px;
+    font-size: 13px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .get-started-btn {
+    padding: 10px 20px;
+    font-size: 13px;
   }
 
   .hero-content {
     padding: 0 20px;
+    margin-top: 120px; /* More margin for stacked mobile navbar */
   }
 
   .hero-title {
@@ -312,18 +358,19 @@ body {
     font-size: 16px;
   }
 
-  .nav-links {
-    gap: 15px;
-    font-size: 14px;
-  }
-
-  .get-started-btn {
-    padding: 14px 28px;
-    font-size: 14px;
-  }
-
   .learn-more-btn {
     padding: 14px 28px;
     font-size: 14px;
+  }
+
+  .logo-image {
+    height: 60px; /* Further reduce logo size on small screens */
+  }
+}
+
+/* Desktop - navbar always visible */
+@media (min-width: 769px) {
+  .navbar {
+    transform: translateY(0) !important;
   }
 }

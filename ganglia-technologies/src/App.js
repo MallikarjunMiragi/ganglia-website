@@ -5,7 +5,10 @@ import ParticleBackground from './components/ParticleBackground';
 import SupporterBand from './components/SupporterBand';
 import AboutUsSection from './components/AboutUsSection';
 import ProductsSection from './components/ProductsSection';
+import StatsStrip from './components/StatsStrip';
 import './styles/App.css';
+import Services from './components/Services';
+
 
 function App() {
   return (
@@ -23,6 +26,8 @@ function App() {
       
       <AboutUsSection />
       <ProductsSection />
+      <StatsStrip />
+      <Services />
     </div>
   );
 }

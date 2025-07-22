@@ -27,44 +27,129 @@
   position: relative;
   width: 650px;
   height: 900px;
+  perspective: 1500px; /* required for 3D flip */
+  border-radius: 25px;
 }
 
 .image-wrapper {
   position: absolute;
   border-radius: 0px;
   overflow: hidden;
-  border: 10px solid #001471;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
 }
 
-.image-wrapper img {
+.image-wrapper:hover {
+  transform: translateY(-15px) translateZ(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.image-wrapper.flipped {
+  transform: rotateY(180deg);
+}
+
+.image-wrapper.flipped:hover {
+  transform: rotateY(180deg) translateY(-15px) translateZ(20px);
+}
+
+.image-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother animation */
+  transform-style: preserve-3d; /* enables 3D flipping */
+  border-radius: 25px;
+}
+
+.image-wrapper.flipped .image-inner {
+  transform: rotateY(180deg);
+}
+
+.image-front,
+.image-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* ensure hidden face is not visible */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 10px solid #001471; /* Move border here so it flips with content */
+  box-sizing: border-box;
+  border-radius: 25px;
+}
+
+.image-front img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 15px;
+}
+
+.image-back {
+  background: #ffffff;
+  color: #333333;
+  transform: rotateY(180deg) scaleX(-1); /* Flip and mirror to make text readable */
+  padding: 30px;
+  text-align: center;
+  border: 10px solid #001471; /* Ensure back also has border */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.image-back h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #001471;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.image-back p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #555555;
+  font-style: italic;
 }
 
 .top-image {
-  top: 100px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  width: 400px;
+  width: 500px;
   height: 300px;
-  z-index: 3;
+  z-index: 1.2;
+}
+
+.top-image:hover {
+  transform: translateX(-50%) translateY(-15px) translateZ(20px);
+}
+
+.top-image.flipped {
+  transform: translateX(-50%) rotateY(180deg);
+}
+
+.top-image.flipped:hover {
+  transform: translateX(-50%) rotateY(180deg) translateY(-15px) translateZ(20px);
 }
 
 .bottom-left {
-  bottom: 300px;
-  left: 40px;
-  width: 380px;
+  bottom: 350px;
+  left: 10px;
+  width: 450px;
   height: 250px;
-  z-index: 2;
+  z-index: 1.1;
 }
 
 .bottom-right {
-  bottom: 100px;
+  bottom: 50px;
   right: 50px;
-  width: 450px;
+  width: 520px;
   height: 340px;
   z-index: 1;
 }
@@ -72,7 +157,6 @@
 .about-right {
   flex: 1;
   max-width: 700px;
-
   width: 100%;
   padding: 0px;
   border-radius: 20px;
@@ -122,6 +206,52 @@
   box-shadow: 0 8px 25px rgba(74, 144, 226, 0.4);
 }
 
+/* Responsive Design - Following products section pattern */
+@media (max-width: 1200px) {
+  .about-section {
+    padding: 0 40px;
+  }
+
+  .about-container {
+    gap: 40px;
+  }
+
+  .image-collage {
+    width: 550px;
+    height: 750px;
+  }
+
+  .top-image {
+    width: 420px;
+    height: 250px;
+  }
+
+  .bottom-left {
+    width: 380px;
+    height: 200px;
+    bottom: 280px;
+  }
+
+  .bottom-right {
+    width: 440px;
+    height: 280px;
+  }
+
+  .about-right {
+    margin-right: 100px;
+    margin-left: 50px;
+  }
+
+  .about-title {
+    font-size: 34px;
+    margin-bottom: 80px;
+  }
+
+  .about-description {
+    font-size: 22px;
+  }
+}
+
 @media (max-width: 1024px) {
   .about-container {
     gap: 60px;
@@ -129,71 +259,253 @@
     text-align: center;
   }
 
-  .ganglia-logo {
-    position: static;
-    margin-bottom: 30px;
-    width: 150px;
+  .about-section {
+    padding: 60px 30px;
   }
 
   .image-collage {
-    width: 400px;
-    height: 350px;
+    width: 500px;
+    height: 600px;
   }
 
   .top-image {
-    width: 240px;
-    height: 140px;
+    width: 380px;
+    height: 220px;
+  }
+
+  .top-image:hover {
+    transform: translateX(-50%) translateY(-10px) translateZ(15px);
+  }
+
+  .top-image.flipped:hover {
+    transform: translateX(-50%) rotateY(180deg) translateY(-10px)
+      translateZ(15px);
   }
 
   .bottom-left {
-    width: 180px;
-    height: 160px;
+    width: 320px;
+    height: 180px;
+    bottom: 220px;
   }
 
   .bottom-right {
-    width: 200px;
-    height: 150px;
+    width: 380px;
+    height: 240px;
+  }
+
+  .image-wrapper:hover {
+    transform: translateY(-10px) translateZ(15px);
+  }
+
+  .image-wrapper.flipped:hover {
+    transform: rotateY(180deg) translateY(-10px) translateZ(15px);
+  }
+
+  .about-right {
+    margin: 0;
+    height: auto;
+    max-width: 600px;
   }
 
   .about-title {
     font-size: 40px;
+    margin-bottom: 60px;
+  }
+
+  .about-description {
+    font-size: 20px;
+    max-width: none;
+  }
+
+  .image-back h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .image-back p {
+    font-size: 14px;
   }
 }
 
+@media (max-width: 968px) {
+  .image-collage {
+    width: 450px;
+    height: 500px;
+  }
+
+  .top-image {
+    width: 340px;
+    height: 190px;
+  }
+
+  .bottom-left {
+    width: 280px;
+    height: 160px;
+    bottom: 180px;
+  }
+
+  .bottom-right {
+    width: 320px;
+    height: 200px;
+  }
+
+  .about-title {
+    font-size: 36px;
+    margin-bottom: 50px;
+  }
+
+  .about-description {
+    font-size: 18px;
+  }
+}
+
+/* Mobile-specific overrides - Replace your existing mobile section with this */
 @media (max-width: 768px) {
   .about-section {
     padding: 40px 20px;
   }
 
+  .about-container {
+    gap: 40px;
+  }
+
   .image-collage {
-    width: 320px;
-    height: 280px;
+    width: 100%;
+    max-width: 100%;
+    height: 250px; /* Reduced height for single image */
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
   }
 
+  /* Remove flip functionality and borders on mobile */
+  .image-wrapper {
+    cursor: default;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: none;
+    transform: none !important;
+    perspective: none;
+    position: absolute;
+  }
+
+  .image-wrapper:hover {
+    transform: none !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .image-wrapper.flipped {
+    transform: none !important;
+  }
+
+  .image-wrapper.flipped:hover {
+    transform: none !important;
+  }
+
+  .image-inner {
+    transition: none;
+    transform: none !important;
+    transform-style: none;
+    border-radius: 8px;
+  }
+
+  .image-wrapper.flipped .image-inner {
+    transform: none !important;
+  }
+
+  .image-front,
+  .image-back {
+    border: none !important;
+    border-radius: 8px;
+    backface-visibility: visible;
+  }
+
+  .image-front {
+    position: relative;
+    z-index: 1;
+  }
+
+  .image-back {
+    display: none !important; /* Hide back content on mobile */
+  }
+
+  .image-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 8px;
+  }
+
+  /* Show only one image - full width */
   .top-image {
-    width: 200px;
-    height: 110px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: 100%;
+    height: 200px;
+    position: absolute;
   }
 
-  .bottom-left {
-    width: 150px;
-    height: 130px;
-  }
-
+  /* Hide other images on mobile */
+  .bottom-left,
   .bottom-right {
-    width: 160px;
-    height: 120px;
+    display: none !important;
   }
 
   .about-title {
     font-size: 32px;
+    margin-bottom: 40px;
+    text-align: center;
   }
 
   .about-description {
     font-size: 16px;
+    text-align: center;
+    margin-bottom: 40px;
   }
 
-  .ganglia-logo {
-    width: 120px;
+  .know-more-btn {
+    padding: 14px 32px;
+    font-size: 15px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+/* Smaller mobile screens */
+@media (max-width: 480px) {
+  .about-section {
+    padding: 30px 15px;
+  }
+
+  .about-container {
+    gap: 30px;
+  }
+
+  .image-collage {
+    height: 200px; /* Even smaller height for very small screens */
+  }
+
+  .top-image {
+    height: 160px;
+  }
+
+  .about-title {
+    font-size: 26px;
+    margin-bottom: 30px;
+  }
+
+  .about-description {
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+
+  .know-more-btn {
+    padding: 12px 28px;
+    font-size: 14px;
   }
 }
