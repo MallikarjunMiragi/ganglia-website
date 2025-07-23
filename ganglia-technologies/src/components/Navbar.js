@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Check if device is mobile
   useEffect(() => {
@@ -33,6 +34,7 @@ const Navbar = () => {
       // Hide navbar when scrolling down
       else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
+        setIsMobileMenuOpen(false); // Close menu when scrolling
       }
       // Keep navbar hidden when scrolling up (unless at top)
       // Remove the scroll up show behavior
@@ -64,6 +66,7 @@ const Navbar = () => {
   const handleNavClick = (e, sectionId) => {
     e.preventDefault();
     scrollToSection(sectionId);
+    setIsMobileMenuOpen(false); // Close mobile menu after clicking
   };
 
   const handleLogoClick = () => {
@@ -84,8 +87,12 @@ const Navbar = () => {
     // navigate('/');
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <nav 
+    <nav
       className={`navbar ${isMobile ? (isVisible ? 'navbar-visible' : 'navbar-hidden') : ''}`}
     >
       <div className="logo">
@@ -97,7 +104,9 @@ const Navbar = () => {
           style={{ cursor: 'pointer' }}
         />
       </div>
-      <div className="navbar-right">
+
+      {/* Desktop Navigation */}
+      <div className={`navbar-right ${isMobile ? 'navbar-desktop-hidden' : ''}`}>
         <ul className="nav-links">
           <li>
             <a
@@ -122,6 +131,48 @@ const Navbar = () => {
         </ul>
         <button className="get-started-btn">Get Started</button>
       </div>
+
+      {/* Mobile Hamburger Menu */}
+      {isMobile && (
+        <>
+          <div className="hamburger-menu" onClick={toggleMobileMenu}>
+            <div className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></div>
+            <div className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></div>
+            <div className={`hamburger-line ${isMobileMenuOpen ? 'active' : ''}`}></div>
+          </div>
+
+          {/* Mobile Menu Overlay */}
+          <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'active' : ''}`}>
+            <ul className="mobile-nav-links">
+              <li>
+                <a
+                  href="#story"
+                  onClick={(e) => handleNavClick(e, 'story')}
+                >
+                  Our Story
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#products"
+                  onClick={(e) => handleNavClick(e, 'products')}
+                >
+                  Products
+                </a>
+              </li>
+              <li><a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a></li>
+              <li><a href="#blog" onClick={() => setIsMobileMenuOpen(false)}>Blog</a></li>
+              <li><a href="#awards" onClick={() => setIsMobileMenuOpen(false)}>Awards & News</a></li>
+              <li><a href="#research" onClick={() => setIsMobileMenuOpen(false)}>Research</a></li>
+              <li>
+                <button className="get-started-btn mobile-get-started" onClick={() => setIsMobileMenuOpen(false)}>
+                  Get Started
+                </button>
+              </li>
+            </ul>
+          </div>
+        </>
+      )}
     </nav>
   );
 };

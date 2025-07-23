@@ -7,17 +7,19 @@
   overflow: hidden;
   margin-top: -1px;
   min-height: auto; /* Changed from 400px to auto */
+  z-index: 1; /* Ensure it stays below navbar */
 }
 
 .stats-background {
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: 1; /* Keep background below navbar */
 }
 
 .stats-container {
   position: relative;
-  z-index: 2;
+  z-index: 2; /* Higher than background but lower than navbar */
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 60px;
@@ -37,6 +39,8 @@
   backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 3; /* Higher than container but lower than navbar */
 }
 
 .stat-card {
@@ -45,6 +49,7 @@
   text-align: center;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   background: transparent;
+  z-index: 4; /* Highest in stats section but still below navbar */
 }
 
 .stat-card:hover {
@@ -141,6 +146,7 @@
     min-height: auto; /* Remove fixed height */
     width: 100%;
     margin-left: 0;
+    z-index: 1; /* Ensure it stays below navbar on mobile */
   }
 
   .stats-container {
@@ -148,6 +154,7 @@
     max-width: 1400px; /* Restore max-width */
     width: 100%;
     margin: 0 auto; /* Center the container */
+    z-index: 2; /* Keep below navbar */
   }
 
   .stats-grid {
@@ -162,6 +169,7 @@
       rgba(29, 31, 55, 0.95) 100%
     );
     backdrop-filter: blur(20px);
+    z-index: 3; /* Keep below navbar */
   }
 
   .stat-card {
@@ -171,6 +179,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 4; /* Keep below navbar */
   }
 
   .stat-number {
@@ -227,10 +236,12 @@
     background: #000426;
     min-height: auto; /* Remove fixed height */
     padding: 20px 0; /* Further reduced padding */
+    z-index: 1; /* Keep below navbar */
   }
 
   .stats-container {
     padding: 0 15px;
+    z-index: 2; /* Keep below navbar */
   }
 
   .stats-grid {
@@ -241,11 +252,13 @@
       rgba(29, 31, 55, 0.92) 0%,
       rgba(29, 31, 55, 0.97) 100%
     );
+    z-index: 3; /* Keep below navbar */
   }
 
   .stat-card {
     padding: 20px 12px; /* Further reduced padding */
     min-height: 100px; /* Further reduced height */
+    z-index: 4; /* Keep below navbar */
   }
 
   .stat-number {
@@ -298,11 +311,13 @@
 @media (max-width: 360px) {
   .stats-strip {
     padding: 15px 0; /* Minimal padding */
+    z-index: 1; /* Keep below navbar */
   }
 
   .stat-card {
     padding: 15px 8px; /* Minimal padding */
     min-height: 90px; /* Minimal height */
+    z-index: 4; /* Keep below navbar */
   }
 
   .stat-number {
@@ -325,6 +340,7 @@
     background: #000426;
     min-height: auto; /* Remove fixed height */
     padding: 35px 0; /* Reduced padding */
+    z-index: 1; /* Keep below navbar */
   }
 
   .stats-grid {
@@ -334,10 +350,12 @@
       rgba(29, 31, 55, 0.88) 0%,
       rgba(29, 31, 55, 0.93) 100%
     );
+    z-index: 3; /* Keep below navbar */
   }
 
   .stat-card {
     padding: 30px 20px; /* Reduced padding */
+    z-index: 4; /* Keep below navbar */
   }
 
   .stat-number {
@@ -385,6 +403,7 @@
     background: #000426;
     min-height: auto; /* Remove fixed height */
     padding: 25px 0; /* Reduced padding */
+    z-index: 1; /* Keep below navbar */
   }
 }
 
@@ -392,5 +411,6 @@
 @media (min-width: 1920px) {
   .stats-strip {
     background: #000426;
+    z-index: 1; /* Keep below navbar */
   }
 }
