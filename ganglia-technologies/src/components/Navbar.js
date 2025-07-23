@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Navbar.css'; // Import the CSS file
+import { useNavigate, useLocation } from 'react-router-dom';
+import '../styles/Navbar.css';
 import logo from '../assets/log.png';
 
 const Navbar = () => {
@@ -7,6 +8,9 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Check if device is mobile
   useEffect(() => {
@@ -36,8 +40,6 @@ const Navbar = () => {
         setIsVisible(false);
         setIsMobileMenuOpen(false); // Close menu when scrolling
       }
-      // Keep navbar hidden when scrolling up (unless at top)
-      // Remove the scroll up show behavior
 
       setLastScrollY(currentScrollY);
     };
@@ -65,26 +67,50 @@ const Navbar = () => {
 
   const handleNavClick = (e, sectionId) => {
     e.preventDefault();
-    scrollToSection(sectionId);
+    
+    if (sectionId === 'careers') {
+      // Navigate to careers page using React Router
+      navigate('/careers');
+    } else {
+      // If we're not on the home page, navigate to home first
+      if (location.pathname !== '/') {
+        navigate('/');
+        // Wait a bit for navigation to complete, then scroll
+        setTimeout(() => {
+          scrollToSection(sectionId);
+        }, 300);
+      } else {
+        // If we're already on home page, just scroll
+        scrollToSection(sectionId);
+      }
+    }
     setIsMobileMenuOpen(false); // Close mobile menu after clicking
   };
 
+  const handleCareersClick = (e) => {
+    e.preventDefault();
+    navigate('/careers');
+    setIsMobileMenuOpen(false);
+  };
+
   const handleLogoClick = () => {
-    // Option 1: Scroll to top of page
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    // Navigate to home page
+    navigate('/');
+    
+    // If already on home page, scroll to top
+    if (location.pathname === '/') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  };
 
-    // Option 2: If you have a home section with ID "home", uncomment this:
-    // scrollToSection('home');
-
-    // Option 3: If you want to reload the page, uncomment this:
-    // window.location.reload();
-
-    // Option 4: If you're using React Router, uncomment and import useNavigate:
-    // const navigate = useNavigate();
-    // navigate('/');
+  const handleGetStartedClick = () => {
+    // You can customize this to navigate to a specific page or section
+    // For now, let's navigate to the careers page
+    navigate('/careers');
+    setIsMobileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
@@ -124,12 +150,53 @@ const Navbar = () => {
               Products
             </a>
           </li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#blog">Blog</a></li>
-          <li><a href="#awards">Awards & News</a></li>
-          <li><a href="#research">Research</a></li>
+          <li>
+            <a 
+              href="#services" 
+              onClick={(e) => handleNavClick(e, 'services')}
+            >
+              Services
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#research" 
+              onClick={(e) => handleNavClick(e, 'research')}
+            >
+              Research
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#blog" 
+              onClick={(e) => handleNavClick(e, 'blog')}
+            >
+              Blog
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#careers" 
+              onClick={handleCareersClick}
+            >
+              Careers
+            </a>
+          </li>
+          <li>
+            <a 
+              href="#awards" 
+              onClick={(e) => handleNavClick(e, 'awards')}
+            >
+              Awards & News
+            </a>
+          </li>
         </ul>
-        <button className="get-started-btn">Get Started</button>
+        <button 
+          className="get-started-btn"
+          onClick={handleGetStartedClick}
+        >
+          Get Started
+        </button>
       </div>
 
       {/* Mobile Hamburger Menu */}
@@ -160,12 +227,51 @@ const Navbar = () => {
                   Products
                 </a>
               </li>
-              <li><a href="#services" onClick={() => setIsMobileMenuOpen(false)}>Services</a></li>
-              <li><a href="#blog" onClick={() => setIsMobileMenuOpen(false)}>Blog</a></li>
-              <li><a href="#awards" onClick={() => setIsMobileMenuOpen(false)}>Awards & News</a></li>
-              <li><a href="#research" onClick={() => setIsMobileMenuOpen(false)}>Research</a></li>
               <li>
-                <button className="get-started-btn mobile-get-started" onClick={() => setIsMobileMenuOpen(false)}>
+                <a 
+                  href="#services" 
+                  onClick={(e) => handleNavClick(e, 'services')}
+                >
+                  Services
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#research" 
+                  onClick={(e) => handleNavClick(e, 'research')}
+                >
+                  Research
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#blog" 
+                  onClick={(e) => handleNavClick(e, 'blog')}
+                >
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#careers" 
+                  onClick={handleCareersClick}
+                >
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="#awards" 
+                  onClick={(e) => handleNavClick(e, 'awards')}
+                >
+                  Awards & News
+                </a>
+              </li>
+              <li>
+                <button 
+                  className="get-started-btn mobile-get-started" 
+                  onClick={handleGetStartedClick}
+                >
                   Get Started
                 </button>
               </li>
