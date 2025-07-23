@@ -3,15 +3,20 @@ import '../styles/CertificationsSection.css';
 
 const CertificationsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
   const sectionRef = useRef(null);
 
-  // Animation on scroll
+  // Animation on scroll - triggers every time section comes into view
   useEffect(() => {
     const currentRef = sectionRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          // Increment animation key to restart animations
+          setAnimationKey(prev => prev + 1);
+        } else {
+          setIsVisible(false);
         }
       },
       {
@@ -31,16 +36,18 @@ const CertificationsSection = () => {
     };
   }, []);
 
-  // Counter animation hook
+  // Counter animation hook - with proper ESLint disable comment
   const useCounter = (end, duration = 2000, start = 0) => {
     const [count, setCount] = useState(start);
-    const hasStarted = useRef(false);
 
     useEffect(() => {
-      if (!isVisible || hasStarted.current) return;
+      if (!isVisible) {
+        setCount(start);
+        return;
+      }
 
-      hasStarted.current = true;
       let startTimestamp = null;
+      let animationId = null;
       
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
@@ -52,13 +59,20 @@ const CertificationsSection = () => {
         setCount(currentCount);
         
         if (progress < 1) {
-          window.requestAnimationFrame(step);
+          animationId = window.requestAnimationFrame(step);
         }
       };
       
-      window.requestAnimationFrame(step);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]); // Only depend on isVisible for triggering animation
+      animationId = window.requestAnimationFrame(step);
+
+      // Cleanup function to cancel animation if component unmounts or visibility changes
+      return () => {
+        if (animationId) {
+          window.cancelAnimationFrame(animationId);
+        }
+      };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVisible, animationKey, end, duration, start]);
 
     return count;
   };
@@ -150,7 +164,7 @@ const CertificationsSection = () => {
         <div className="certifications-stats-grid">
           {stats.map((stat, index) => (
             <div 
-              key={stat.id}
+              key={`${stat.id}-${animationKey}`} // Add animationKey to force re-render
               className="certification-stat-item"
               style={{
                 animationDelay: isVisible ? `${(index + 3) * 0.2}s` : '0s',

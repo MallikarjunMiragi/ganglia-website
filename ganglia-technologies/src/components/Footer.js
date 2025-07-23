@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import '../styles/Footer.css';
-import logo from '../assets/log.png'; // Add this import
+import logo from '../assets/log.png';
 
 const Footer = () => {
   const canvasRef = useRef(null);
@@ -70,7 +70,7 @@ const Footer = () => {
             vx: (Math.random() - 0.5) * 0.3, // Slightly slower movement
             vy: (Math.random() - 0.5) * 0.3,
             radius: Math.random() * 1.5 + 0.8, // Slightly smaller nodes
-            opacity: Math.random() * 0.4 + 0.6, // Higher base opacity
+            opacity: Math.random() * 0.4 + 0.3, // Adjusted opacity for better visibility over background image
             pulsePhase: Math.random() * Math.PI * 2
           });
         }
@@ -110,11 +110,12 @@ const Footer = () => {
         const x = (clientX / window.innerWidth) * 100;
         const y = (clientY / window.innerHeight) * 100;
         
+        // Enhanced overlay effect that works well with background image
         this.overlay.style.background = `
           radial-gradient(circle 400px at ${x}% ${y}%, 
-            rgba(100, 149, 237, 0.2) 0%, 
-            rgba(100, 149, 237, 0.12) 30%, 
-            rgba(100, 149, 237, 0.06) 60%,
+            rgba(64, 224, 208, 0.25) 0%, 
+            rgba(100, 149, 237, 0.15) 30%, 
+            rgba(0, 191, 255, 0.08) 60%,
             rgba(100, 149, 237, 0) 100%)
         `;
       }
@@ -135,7 +136,7 @@ const Footer = () => {
           
           // Pulse effect
           node.pulsePhase += 0.015; // Slightly slower pulse
-          node.currentOpacity = node.opacity + Math.sin(node.pulsePhase) * 0.2;
+          node.currentOpacity = node.opacity + Math.sin(node.pulsePhase) * 0.15; // Adjusted for background image
         });
       }
       
@@ -152,6 +153,20 @@ const Footer = () => {
         return 1;
       }
       
+      // New function to calculate fade based on vertical position
+      getVerticalFade(y) {
+        if (!this.canvas) return 1;
+        
+        const topQuarter = this.canvas.height * 0.25; // Top 25% of the canvas
+        
+        if (y <= topQuarter) {
+          // Linear fade from top quarter to top (0)
+          return y / topQuarter; // At top (y=0), fade = 0; at top quarter, fade = 1
+        }
+        
+        return 1; // Full opacity below top quarter
+      }
+      
       getConnectionOpacity(node1, node2) {
         const dx = node1.x - node2.x;
         const dy = node1.y - node2.y;
@@ -159,7 +174,13 @@ const Footer = () => {
         
         if (distance > this.maxDistance) return 0;
         
-        let opacity = (1 - distance / this.maxDistance) * 0.4; // Base opacity for denser mesh
+        let opacity = (1 - distance / this.maxDistance) * 0.4; // Slightly reduced base opacity for better visibility over background
+        
+        // Apply vertical fade to both nodes (use the minimum fade for the connection)
+        const fade1 = this.getVerticalFade(node1.y);
+        const fade2 = this.getVerticalFade(node2.y);
+        const verticalFade = Math.min(fade1, fade2);
+        opacity *= verticalFade;
         
         // Boost opacity if near mouse
         if (this.isMouseInside) {
@@ -171,7 +192,7 @@ const Footer = () => {
           
           if (mouseDistance < this.mouseRadius) {
             const mouseEffect = 1 - mouseDistance / this.mouseRadius;
-            opacity += mouseEffect * 1.2; // Stronger mouse effect
+            opacity += mouseEffect * 1.2 * verticalFade; // Apply vertical fade to mouse effect too
           }
         }
         
@@ -191,15 +212,17 @@ const Footer = () => {
                 this.nodes[j].x, this.nodes[j].y
               );
               
-              const color1 = `rgba(135, 206, 250, ${opacity})`;
-              const color2 = `rgba(100, 149, 237, ${opacity * 0.8})`;
+              // Updated colors to match the background network theme - deep blues with cyan accents
+              const color1 = `rgba(0, 123, 255, ${opacity * 0.8})`; // Deep blue
+              const color2 = `rgba(32, 201, 151, ${opacity * 0.7})`; // Cyan-green
+              const color3 = `rgba(13, 110, 253, ${opacity * 0.9})`; // Bright blue
               
               gradient.addColorStop(0, color1);
-              gradient.addColorStop(0.5, `rgba(173, 216, 230, ${opacity * 0.9})`);
+              gradient.addColorStop(0.5, color3);
               gradient.addColorStop(1, color2);
               
               this.ctx.strokeStyle = gradient;
-              this.ctx.lineWidth = opacity * 1.2; // Slightly thinner lines for denser mesh
+              this.ctx.lineWidth = opacity * 1.4; // Slightly thicker lines for better visibility
               this.ctx.globalAlpha = opacity;
               
               this.ctx.beginPath();
@@ -216,23 +239,27 @@ const Footer = () => {
         
         this.nodes.forEach(node => {
           const brightness = this.getNodeBrightness(node);
-          const finalOpacity = Math.max(0, Math.min(1, node.currentOpacity * brightness));
+          const verticalFade = this.getVerticalFade(node.y);
+          const finalOpacity = Math.max(0, Math.min(1, node.currentOpacity * brightness * verticalFade));
           
-          // Node glow
+          // Skip drawing if opacity is too low
+          if (finalOpacity < 0.05) return;
+          
+          // Node glow - updated colors to match background network theme
           const gradient = this.ctx.createRadialGradient(
             node.x, node.y, 0,
             node.x, node.y, node.radius * 3.5
           );
           
           if (brightness > 1.5) {
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${finalOpacity})`);
-            gradient.addColorStop(0.2, `rgba(135, 206, 250, ${finalOpacity * 0.9})`);
-            gradient.addColorStop(0.6, `rgba(100, 149, 237, ${finalOpacity * 0.5})`);
-            gradient.addColorStop(1, 'rgba(100, 149, 237, 0)');
+            gradient.addColorStop(0, `rgba(255, 255, 255, ${finalOpacity * 0.9})`);
+            gradient.addColorStop(0.2, `rgba(32, 201, 151, ${finalOpacity * 0.85})`); // Cyan-green
+            gradient.addColorStop(0.6, `rgba(0, 123, 255, ${finalOpacity * 0.7})`); // Deep blue
+            gradient.addColorStop(1, 'rgba(0, 4, 38, 0)'); // Dark blue fade
           } else {
-            gradient.addColorStop(0, `rgba(173, 216, 230, ${finalOpacity})`);
-            gradient.addColorStop(0.3, `rgba(135, 206, 250, ${finalOpacity * 0.8})`);
-            gradient.addColorStop(1, 'rgba(100, 149, 237, 0)');
+            gradient.addColorStop(0, `rgba(32, 201, 151, ${finalOpacity * 0.8})`); // Cyan-green
+            gradient.addColorStop(0.3, `rgba(13, 110, 253, ${finalOpacity * 0.7})`); // Bright blue
+            gradient.addColorStop(1, 'rgba(0, 4, 38, 0)'); // Dark blue fade
           }
           
           this.ctx.fillStyle = gradient;
@@ -242,10 +269,10 @@ const Footer = () => {
           this.ctx.arc(node.x, node.y, node.radius * (brightness > 1.5 ? 2.5 : 1.8), 0, Math.PI * 2);
           this.ctx.fill();
           
-          // Core node
+          // Core node - updated colors to match the network theme
           this.ctx.fillStyle = brightness > 1.5 ? 
-            `rgba(255, 255, 255, ${finalOpacity})` : 
-            `rgba(173, 216, 230, ${finalOpacity})`;
+            `rgba(255, 255, 255, ${finalOpacity * 0.9})` : 
+            `rgba(32, 201, 151, ${finalOpacity * 0.8})`; // Cyan-green core
           this.ctx.beginPath();
           this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
           this.ctx.fill();
@@ -310,6 +337,8 @@ const Footer = () => {
   return (
     <footer ref={footerRef} className="footer">
       <div className="footer-background">
+        {/* Gradient overlay for top half */}
+        <div className="gradient-overlay"></div>
         <canvas ref={canvasRef} className="network-canvas"></canvas>
         <div ref={overlayRef} className="brightness-overlay"></div>
       </div>
