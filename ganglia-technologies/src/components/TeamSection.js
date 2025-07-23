@@ -1,5 +1,15 @@
 import React from 'react';
-import '../styles/TeamSection.css'; // Assuming you have a CSS file for styling
+import '../styles/TeamSection.css';
+
+// Import all team images
+import team1 from '../assets/team1.jpg';
+import team2 from '../assets/team2.jpg';
+import team3 from '../assets/team3.jpg';
+import team4 from '../assets/team4.jpg';
+import team5 from '../assets/team5.jpg';
+import team6 from '../assets/team6.jpg';
+import team7 from '../assets/team7.jpg';
+import team8 from '../assets/team8.jpg';
 
 const TeamSection = () => {
   const teamMembers = [
@@ -7,54 +17,64 @@ const TeamSection = () => {
       id: 1,
       name: "Dr Jayaraj Mymbilly Balakrishnan",
       role: "Co-founder",
-      image: "/assets/team1.jpg" // placeholder path
+      image: team1,
+      linkedin: "https://www.linkedin.com/in/dr-jayaraj-mymbilly-balakrishnan-71a15b6/"
     },
     {
       id: 2,
       name: "Dr Dasharathraj K Shetty",
       role: "Co-founder",
-      image: "/assets/team2.jpg" // placeholder path
+      image: team2,
+      linkedin: "https://www.linkedin.com/in/dasharathraj/"
     },
     {
       id: 3,
       name: "Dr Balakrishna S Maddodi",
       role: "Co-founder",
-      image: "/assets/team3.jpg" // placeholder path
+      image: team3,
+      linkedin: "https://www.linkedin.com/in/dr-balakrishna-srinivas-maddodi-68874218/"
     },
     {
       id: 4,
       name: "Dr Sandeep S Shenoy",
       role: "Director",
-      image: "/assets/team4.jpg" // placeholder path
+      image: team4,
+      linkedin: null // Not available
     },
     {
       id: 5,
       name: "Namesh Malarout",
       role: "CEO",
-      image: "/assets/team5.jpg" // placeholder path
+      image: team5,
+      linkedin: "https://www.linkedin.com/in/namesh-malarout-97375697/"
     },
     {
       id: 6,
       name: "Shreepathy Ranga Bhatta",
       role: "Director",
-      image: "/assets/team6.jpg" // placeholder path
+      image: team6,
+      linkedin: "https://www.linkedin.com/in/shreepathy-ranga-bhatta-862a2b24a/"
     },
     {
       id: 7,
       name: "Anusha Pai",
       role: "Director",
-      image: "/assets/team7.jpg" // placeholder path
+      image: team7,
+      linkedin: "https://www.linkedin.com/in/anusha-pai-013b0213/"
     },
     {
       id: 8,
       name: "Dr Manu Sudhi",
       role: "Director",
-      image: "/assets/team8.jpg" // placeholder path
+      image: team8,
+      linkedin: "https://www.linkedin.com/in/dr-manu-sudhi-609296167/"
     }
   ];
 
-  const handleLinkedInClick = () => {
-    window.open('https://www.linkedin.com', '_blank');
+  const handleLinkedInClick = (url) => {
+    if (url) {
+      window.open(url, '_blank');
+    }
   };
 
   return (
@@ -71,14 +91,24 @@ const TeamSection = () => {
               <div key={member.id} className="team-card">
                 <div className="team-image-container">
                   <div className="team-image-placeholder">
-                    {/* Image placeholder - replace with actual images */}
-                    <div className="placeholder-content">
+                    {/* Replace placeholder with actual image */}
+                    <img 
+                      src={member.image} 
+                      alt={member.name}
+                      className="team-member-image"
+                      onError={(e) => {
+                        // Fallback if image fails to load
+                        e.target.style.display = 'none';
+                        e.target.nextSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="placeholder-content" style={{display: 'none'}}>
                       <span>Photo</span>
                     </div>
                   </div>
-                  <button 
+                  <button
                     className="linkedin-btn"
-                    onClick={handleLinkedInClick}
+                    onClick={() => handleLinkedInClick(member.linkedin)}
                     aria-label={`View ${member.name} on LinkedIn`}
                   >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

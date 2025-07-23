@@ -1,13 +1,13 @@
 .team-section {
   width: 100%;
-  min-height: auto; /* Changed from 100vh to auto */
+  min-height: auto;
   position: relative;
   overflow: hidden;
 }
 
 .team-background {
   width: 100%;
-  min-height: auto; /* Changed from 100vh to auto */
+  min-height: auto;
   background-image: url("../assets/teambg.png");
   background-size: cover;
   background-position: center;
@@ -64,6 +64,7 @@
   width: 100%;
   max-width: 280px;
   height: 400px;
+  overflow: hidden;
 }
 
 .team-card:hover {
@@ -87,6 +88,22 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+}
+
+/* CRITICAL: Team member image styles */
+.team-member-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 0;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.team-image-container:hover .team-member-image {
+  transform: scale(1.05);
 }
 
 .placeholder-content {
@@ -128,6 +145,10 @@
 .team-info {
   padding: 12px;
   text-align: center;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .team-name {
@@ -179,34 +200,31 @@
 
   .team-card {
     max-width: 240px;
+    height: 350px;
   }
 
   .team-image-container {
-    height: 260px;
+    height: 250px;
+  }
+
+  .team-info {
+    height: 100px;
   }
 }
 
 @media (max-width: 600px) {
-  .team-section {
-    min-height: auto; /* Ensure no extra height */
-  }
-
-  .team-background {
-    min-height: auto; /* Remove 100vh constraint */
-  }
-
   .team-grid {
-    grid-template-columns: repeat(4, 1fr); /* 4 columns */
-    grid-template-rows: repeat(2, 1fr); /* 2 rows */
-    gap: 8px; /* Small gap between cards */
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
   }
 
   .team-content {
-    padding: 30px 10px 20px 10px; /* Reduced bottom padding */
+    padding: 30px 10px 20px 10px;
   }
 
   .team-title {
-    font-size: 28px; /* Slightly smaller title */
+    font-size: 28px;
   }
 
   .team-header {
@@ -214,34 +232,51 @@
   }
 
   .team-card {
-    max-width: none; /* Remove width constraints */
+    max-width: none;
     width: 100%;
-    height: 140px; /* Small height to fit 2 rows */
+    height: 140px;
+    border-radius: 12px;
   }
 
   .team-image-container {
-    height: 80px; /* Very small image area */
+    height: 80px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* MOBILE: Ensure images still fit perfectly */
+  .team-member-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0;
+  }
+
+  .team-image-placeholder {
+    border-radius: 0;
   }
 
   .team-info {
-    padding: 6px 4px; /* Minimal padding */
+    padding: 6px 4px;
+    height: 60px;
   }
 
   .team-name {
-    font-size: 10px; /* Very small text */
+    font-size: 10px;
     margin: 0 0 2px 0;
     line-height: 1.2;
   }
 
   .team-role {
-    font-size: 8px; /* Very small role text */
+    font-size: 8px;
   }
 
   .linkedin-btn {
-    width: 20px; /* Tiny LinkedIn button */
+    width: 20px;
     height: 20px;
     bottom: 5px;
     left: 5px;
+    border-radius: 4px;
   }
 
   .linkedin-btn svg {
@@ -250,21 +285,33 @@
   }
 
   .placeholder-content {
-    font-size: 8px; /* Smaller "Photo" text */
+    font-size: 8px;
   }
 }
 
 @media (max-width: 480px) {
   .team-content {
-    padding: 20px 10px 15px 10px; /* Even less bottom padding */
+    padding: 20px 10px 15px 10px;
   }
 
   .team-card {
-    height: 120px; /* Even smaller cards */
+    height: 120px;
   }
 
   .team-image-container {
     height: 70px;
+  }
+
+  /* EXTRA SMALL MOBILE: Perfect image fitting */
+  .team-member-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .team-info {
+    height: 50px;
   }
 
   .team-name {

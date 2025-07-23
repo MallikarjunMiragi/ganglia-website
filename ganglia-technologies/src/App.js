@@ -9,6 +9,7 @@ import StatsStrip from './components/StatsStrip';
 import Services from './components/Services';
 import TeamSection from './components/TeamSection';
 import CertificationsSection from './components/CertificationsSection';
+import Footer from './components/Footer';
 import './styles/App.css'; // Make sure this path is correct for your new App.css
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
       <Services />
       <TeamSection />
       <CertificationsSection />
-
+      <Footer />
     </div>
   );
 }
