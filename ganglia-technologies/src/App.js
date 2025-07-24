@@ -12,7 +12,9 @@ import TeamSection from './components/TeamSection';
 import CertificationsSection from './components/CertificationsSection';
 import Footer from './components/Footer';
 import CareersPage from './components/CareersPage';
-import './styles/App.css'; // Make sure this path is correct for your new App.css
+import ContactUs from './components/ContactUs';
+import OurStory from './components/OurStory'; // Add this import
+import './styles/App.css';
 
 // Create a HomePage component that contains all your main page content
 const HomePage = () => {
@@ -47,6 +49,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/careers" element={<CareersPage />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/our-story" element={<OurStory />} /> {/* Add this route */}
         </Routes>
       </div>
     </Router>

@@ -1,0 +1,815 @@
+/* OurStory.css - Enhanced for complete design match */
+
+/* Keyframes for animations */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Main container styles */
+.aboutus-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1f3a 0%, #0f1429 50%, #000814 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Loading container */
+.loading-container {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #1a1f3a 0%, #0f1429 50%, #000814 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Stars background */
+.aboutus-stars-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.aboutus-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background-color: #60a5fa;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 4s infinite;
+}
+
+/* Content wrapper */
+.aboutus-content-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 120px 2rem 0 2rem;
+}
+
+/* Header styles */
+.aboutus-header {
+  text-align: left;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+}
+
+.aboutus-main-title {
+  font-size: 48px;
+  font-weight: 400;
+  margin: 0;
+  color: #ffffff;
+  line-height: 1;
+  text-decoration: underline;
+  text-decoration-color: #60a5fa;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 3px;
+}
+
+.aboutus-company-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #fbbf24;
+  margin: 0;
+  line-height: 1;
+  text-decoration: underline;
+  text-decoration-color: #60a5fa;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 3px;
+}
+
+/* Slide elements */
+.slide-element {
+  opacity: 0;
+  transition: all 0.8s ease-out;
+}
+
+.slide-element.visible {
+  opacity: 1;
+}
+
+.slide-left {
+  transform: translateX(-100px);
+  transition: all 0.8s ease-out;
+}
+
+.slide-left.visible {
+  transform: translateX(0);
+}
+
+.slide-right {
+  transform: translateX(100px);
+  transition: all 0.8s ease-out;
+}
+
+.slide-right.visible {
+  transform: translateX(0);
+}
+
+.slide-up {
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.slide-up.visible {
+  transform: translateY(0);
+}
+
+/* Stacking container */
+.stacking-container {
+  position: relative;
+  margin-bottom: 3rem;
+}
+
+.stacking-card {
+  position: relative;
+  background: rgba(37, 99, 235, 0.15);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #60a5fa;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+/* Text styles */
+.section-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e5e7eb;
+  margin: 0;
+}
+
+.section-text-with-margin {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+/* List styles */
+.feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #e5e7eb;
+}
+
+.feature-list-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.feature-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.feature-list-item-large {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.feature-list-item-large:last-child {
+  margin-bottom: 0;
+}
+
+.feature-bullet {
+  color: #60a5fa;
+  margin-right: 1rem;
+  margin-top: 0.2rem;
+  font-size: 18px;
+}
+
+/* Hero image section - Full width */
+.hero-image-section {
+  margin: 3rem 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  text-align: center;
+}
+
+.hero-image-container {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-overlay-text {
+  font-size: clamp(24px, 4vw, 48px);
+  font-weight: 600;
+  color: white;
+  text-align: center;
+  padding: 0 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Ganglia story section - Full width */
+.ganglia-story-section {
+  background: #e5e7eb;
+  margin: 3rem 0;
+  padding: 3rem 2rem;
+  text-align: center;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.story-subtitle {
+  font-size: 18px;
+  color: #6b7280;
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+.story-title {
+  font-size: 36px;
+  font-weight: 400;
+  color: #1f2937;
+  margin: 0;
+}
+
+.ganglia-text {
+  font-size: 36px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Philosophy section */
+.philosophy-section {
+  margin-bottom: 3rem;
+}
+
+.philosophy-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  text-align: left;
+  padding-left: 1rem;
+}
+
+/* Mission cards */
+.mission-cards-container {
+  margin-bottom: 3rem;
+}
+
+.mission-card {
+  background: #ffffff;
+  color: #1f2937;
+  border-radius: 16px;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.mission-card:last-child {
+  margin-bottom: 0;
+}
+
+.mission-card-content {
+  max-width: 85%;
+}
+
+.mission-card-content-right {
+  max-width: 85%;
+  margin-left: auto;
+  text-align: left;
+}
+
+.mission-quote {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.mission-description {
+  font-size: 16px;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mission-description-center {
+  font-size: 16px;
+  color: #4b5563;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mission-title {
+  position: absolute;
+  bottom: 2rem;
+  right: 3rem;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+.mission-title-left {
+  position: absolute;
+  bottom: 2rem;
+  left: 3rem;
+  font-size: 28px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+}
+
+/* Values section */
+.values-section {
+  margin-bottom: 3rem;
+}
+
+.values-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.value-card {
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
+}
+
+.value-card-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.value-card-description {
+  color: #e5e7eb;
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Broader Impact Section */
+.broader-impact-section {
+  margin-bottom: 3rem;
+}
+
+.broader-impact-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.broader-impact-content {
+  background: rgba(30, 58, 138, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.broader-impact-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e5e7eb;
+  margin-bottom: 1.5rem;
+}
+
+.broader-impact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+  color: #e5e7eb;
+}
+
+.broader-impact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.broader-impact-item:last-child {
+  margin-bottom: 0;
+}
+
+.broader-impact-conclusion {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e5e7eb;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Milestones section */
+.milestones-section {
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.milestones-title {
+  font-size: 36px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  text-align: left;
+  padding-left: 1rem;
+}
+
+.milestones-image {
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: 16px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Milestone Timeline Styles */
+.milestones-timeline-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.timeline-wrapper {
+  position: relative;
+  padding: 2rem 0;
+}
+
+.timeline-central-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: #60a5fa;
+  transform: translateX(-50%);
+}
+
+.timeline-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 3rem;
+  min-height: 80px;
+}
+
+.timeline-item.left {
+  justify-content: flex-end;
+}
+
+.timeline-item.right {
+  justify-content: flex-start;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 16px;
+  height: 16px;
+  background: #60a5fa;
+  border-radius: 50%;
+  border: 4px solid #0f1429;
+  z-index: 10;
+}
+
+.timeline-content {
+  width: 45%;
+  padding: 0 2rem;
+}
+
+.timeline-item.left .timeline-content {
+  text-align: right;
+}
+
+.timeline-item.right .timeline-content {
+  text-align: left;
+}
+
+.timeline-card {
+  background: #2563eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+  max-width: 300px;
+}
+
+.timeline-item.left .timeline-card {
+  margin-left: auto;
+}
+
+.timeline-item.right .timeline-card {
+  margin-right: auto;
+}
+
+.timeline-date {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-title {
+  color: #e5e7eb;
+  font-size: 12px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .aboutus-content-wrapper {
+    padding: 100px 1rem 0 1rem;
+  }
+
+  .aboutus-main-title,
+  .aboutus-company-title {
+    font-size: 32px;
+  }
+
+  .philosophy-title,
+  .values-title,
+  .milestones-title {
+    font-size: 28px;
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .story-title {
+    font-size: 28px;
+  }
+
+  .ganglia-text {
+    font-size: 28px;
+  }
+
+  .stacking-card {
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mission-card {
+    padding: 2rem;
+  }
+
+  .mission-card-content,
+  .mission-card-content-right {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .mission-title,
+  .mission-title-left {
+    position: static;
+    font-size: 24px;
+    margin-top: 2rem;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .value-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .value-card-title {
+    font-size: 20px;
+  }
+
+  .hero-overlay-text {
+    font-size: 20px;
+  }
+
+  .ganglia-story-section {
+    padding: 2rem 1rem;
+  }
+
+  /* Timeline responsive */
+  .timeline-central-line {
+    left: 2rem;
+  }
+
+  .timeline-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 4rem;
+  }
+
+  .timeline-item.left,
+  .timeline-item.right {
+    justify-content: flex-start;
+  }
+
+  .timeline-dot {
+    left: 2rem;
+    top: 1rem;
+  }
+
+  .timeline-content {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+  }
+
+  .timeline-card {
+    max-width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .aboutus-content-wrapper {
+    padding: 80px 1rem 0 1rem;
+  }
+
+  .aboutus-main-title,
+  .aboutus-company-title {
+    font-size: 24px;
+  }
+
+  .philosophy-title,
+  .values-title,
+  .milestones-title {
+    font-size: 24px;
+  }
+
+  .story-title {
+    font-size: 24px;
+  }
+
+  .ganglia-text {
+    font-size: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+
+  .mission-quote {
+    font-size: 18px;
+  }
+
+  .mission-title,
+  .mission-title-left {
+    font-size: 20px;
+  }
+
+  .value-card-title {
+    font-size: 18px;
+  }
+
+  .stacking-card {
+    padding: 1.5rem;
+  }
+
+  .mission-card {
+    padding: 1.5rem;
+  }
+
+  .milestones-timeline-container {
+    padding: 1rem;
+  }
+
+  .timeline-card {
+    padding: 1rem;
+  }
+
+  .timeline-date {
+    font-size: 12px;
+  }
+
+  .timeline-title {
+    font-size: 11px;
+  }
+}

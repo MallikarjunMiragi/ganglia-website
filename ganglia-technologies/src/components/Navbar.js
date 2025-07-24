@@ -93,6 +93,13 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // New function to handle Our Story navigation
+  const handleOurStoryClick = (e) => {
+    e.preventDefault();
+    navigate('/our-story');
+    setIsMobileMenuOpen(false);
+  };
+
   const handleLogoClick = () => {
     // Navigate to home page
     navigate('/');
@@ -108,8 +115,8 @@ const Navbar = () => {
 
   const handleGetStartedClick = () => {
     // You can customize this to navigate to a specific page or section
-    // For now, let's navigate to the careers page
-    navigate('/careers');
+    // For now, let's navigate to the contact page
+    navigate('/contact');
     setIsMobileMenuOpen(false);
   };
 
@@ -136,8 +143,8 @@ const Navbar = () => {
         <ul className="nav-links">
           <li>
             <a
-              href="#story"
-              onClick={(e) => handleNavClick(e, 'story')}
+              href="#our-story"
+              onClick={handleOurStoryClick}
             >
               Our Story
             </a>
@@ -213,8 +220,8 @@ const Navbar = () => {
             <ul className="mobile-nav-links">
               <li>
                 <a
-                  href="#story"
-                  onClick={(e) => handleNavClick(e, 'story')}
+                  href="#our-story"
+                  onClick={handleOurStoryClick}
                 >
                   Our Story
                 </a>

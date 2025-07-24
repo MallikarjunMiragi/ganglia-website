@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/CareersPage.css';
 import Footer from './Footer';
-import logo from '../assets/log.png'; 
+import logo from '../assets/logob.png'; 
 
 const CareersPage = () => {
   const [activeFilter, setActiveFilter] = useState('all');

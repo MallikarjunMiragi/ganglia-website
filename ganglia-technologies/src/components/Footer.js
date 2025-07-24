@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Footer.css';
 import logo from '../assets/log.png';
 
@@ -8,6 +9,8 @@ const Footer = () => {
   const footerRef = useRef(null);
   const networkRef = useRef(null);
   const mountedRef = useRef(true);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Reset mounted ref
@@ -334,6 +337,36 @@ const Footer = () => {
     };
   }, []);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait a bit for navigation to complete, then scroll
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 300);
+    } else {
+      // If we're already on home page, just scroll
+      scrollToSection(sectionId);
+    }
+  };
+
+  const handleContactClick = () => {
+    navigate('/contact');
+  };
+
   return (
     <footer ref={footerRef} className="footer">
       <div className="footer-background">
@@ -389,18 +422,18 @@ const Footer = () => {
           <div className="footer-section company-links">
             <h3>Company</h3>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#story">Our Story</a></li>
-              <li><a href="#products">Products</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#awards">Awards & Research</a></li>
+              <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
+              <li><a href="#story" onClick={(e) => handleNavClick(e, 'story')}>Our Story</a></li>
+              <li><a href="#products" onClick={(e) => handleNavClick(e, 'products')}>Products</a></li>
+              <li><a href="#services" onClick={(e) => handleNavClick(e, 'services')}>Services</a></li>
+              <li><a href="#blog" onClick={(e) => handleNavClick(e, 'blog')}>Blog</a></li>
+              <li><a href="#awards" onClick={(e) => handleNavClick(e, 'awards')}>Awards & Research</a></li>
             </ul>
           </div>
           
           <div className="footer-newsletter">
             <h3>Join Our Newsletter</h3>
-            <button className="contact-btn">Contact Now</button>
+            <button className="contact-btn" onClick={handleContactClick}>Contact Now</button>
             
             <div className="social-icons">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook">
