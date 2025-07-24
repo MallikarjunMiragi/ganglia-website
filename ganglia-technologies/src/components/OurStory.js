@@ -2,10 +2,11 @@
 import React, { useRef, useEffect, useState } from "react";
 import Footer from "./Footer";
 import CardParticleEffect from "./CardParticleEffect";
+import TechMilestonesTimeline from "./TechMilestonesTimeline";
 import '../styles/OurStory.css';
 
 // Static imports for images with fallbacks
-let aboutusImage, milestonesImage;
+let aboutusImage;
 
 try {
   aboutusImage = require('../assets/aboutus.svg');
@@ -13,21 +14,17 @@ try {
   aboutusImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='600' viewBox='0 0 1200 600'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23001a4d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23000814;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='600' fill='url(%23bg)'/%3E%3Cg transform='translate(200,150)'%3E%3Crect width='800' height='300' fill='%23374151' rx='20'/%3E%3Ccircle cx='150' cy='150' r='40' fill='%234B5563'/%3E%3Ccircle cx='300' cy='150' r='40' fill='%234B5563'/%3E%3Ccircle cx='450' cy='150' r='40' fill='%234B5563'/%3E%3Ccircle cx='600' cy='150' r='40' fill='%234B5563'/%3E%3Ccircle cx='650' cy='150' r='40' fill='%234B5563'/%3E%3Ctext x='400' y='250' text-anchor='middle' fill='%239CA3AF' font-size='24'%3ETeam Silhouette%3C/text%3E%3C/g%3E%3C/svg%3E";
 }
 
-try {
-  milestonesImage = require('../assets/milestones.svg');
-} catch (error) {
-  milestonesImage = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='600' viewBox='0 0 1000 600'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23001a4d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23000814;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1000' height='600' fill='url(%23bg)'/%3E%3Cline x1='500' y1='50' x2='500' y2='550' stroke='%2360a5fa' stroke-width='3'/%3E%3Cg%3E%3Ccircle cx='500' cy='100' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='80' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='100' text-anchor='middle' fill='white' font-size='12'%3E2023 - Founded%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='200' r='8' fill='%2360a5fa'/%3E%3Crect x='520' y='180' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='610' y='200' text-anchor='middle' fill='white' font-size='12'%3EFirst Product Launch%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='300' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='280' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='300' text-anchor='middle' fill='white' font-size='12'%3ETeam Expansion%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='400' r='8' fill='%2360a5fa'/%3E%3Crect x='520' y='380' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='610' y='400' text-anchor='middle' fill='white' font-size='12'%3EGlobal Recognition%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='500' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='480' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='500' text-anchor='middle' fill='white' font-size='12'%3EFuture Vision%3C/text%3E%3C/g%3E%3Ctext x='500' y='40' text-anchor='middle' fill='%2360a5fa' font-size='24' font-weight='bold'%3EOur Journey%3C/text%3E%3C/svg%3E";
-}
-
 function OurStory() {
   const [stars, setStars] = useState([]);
   const [visibleElements, setVisibleElements] = useState(new Set());
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState('down');
   const observerRef = useRef(null);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    // Generate stars with random positions and animation delays
-    const starArray = [...Array(100)].map((_, i) => ({
+    // Generate fewer stars with random positions and animation delays
+    const starArray = [...Array(50)].map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       top: Math.random() * 100,
@@ -37,6 +34,22 @@ function OurStory() {
     
     // Set images as loaded after a short delay
     setTimeout(() => setImagesLoaded(true), 100);
+  }, []);
+
+  useEffect(() => {
+    // Track scroll direction
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY.current) {
+        setScrollDirection('down');
+      } else {
+        setScrollDirection('up');
+      }
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -80,7 +93,7 @@ function OurStory() {
         observerRef.current.disconnect();
       }
     };
-  }, [imagesLoaded]); // Add imagesLoaded as dependency
+  }, [imagesLoaded]);
 
   // Function to safely require images with fallback
   const getImageSrc = (imageModule, fallback) => {
@@ -125,7 +138,9 @@ function OurStory() {
           className={`slide-element slide-up aboutus-header ${visibleElements.has('header') ? 'visible' : ''}`}
         >
           <h1 className="aboutus-main-title">About</h1>
-          <h2 className="aboutus-company-title">Ganglia Technologies</h2>
+          <h2 className="aboutus-company-title">
+            <span className="ganglia-highlight">Ganglia</span> Technologies
+          </h2>
         </div>
 
         {/* Cards Container */}
@@ -133,7 +148,7 @@ function OurStory() {
           {/* Why We Exist Section */}
           <div
             id="why-exist"
-            className={`slide-element slide-left stacking-card ${visibleElements.has('why-exist') ? 'visible' : ''}`}
+            className={`slide-element ${scrollDirection === 'down' ? 'slide-down' : 'slide-up'} stacking-card ${visibleElements.has('why-exist') ? 'visible' : ''}`}
           >
             <div className="card-overlay">
               <CardParticleEffect />
@@ -154,7 +169,7 @@ function OurStory() {
           {/* How we do it Section */}
           <div
             id="how-we-do"
-            className={`slide-element slide-right stacking-card ${visibleElements.has('how-we-do') ? 'visible' : ''}`}
+            className={`slide-element ${scrollDirection === 'down' ? 'slide-down' : 'slide-up'} stacking-card ${visibleElements.has('how-we-do') ? 'visible' : ''}`}
           >
             <div className="card-overlay">
               <CardParticleEffect />
@@ -198,7 +213,7 @@ function OurStory() {
           {/* What We Create Section */}
           <div
             id="what-we-create"
-            className={`slide-element slide-left stacking-card ${visibleElements.has('what-we-create') ? 'visible' : ''}`}
+            className={`slide-element ${scrollDirection === 'down' ? 'slide-down' : 'slide-up'} stacking-card ${visibleElements.has('what-we-create') ? 'visible' : ''}`}
           >
             <div className="card-overlay">
               <CardParticleEffect />
@@ -255,7 +270,7 @@ function OurStory() {
           {/* The Impact Section */}
           <div
             id="impact"
-            className={`slide-element slide-right stacking-card ${visibleElements.has('impact') ? 'visible' : ''}`}
+            className={`slide-element ${scrollDirection === 'down' ? 'slide-down' : 'slide-up'} stacking-card ${visibleElements.has('impact') ? 'visible' : ''}`}
           >
             <div className="card-overlay">
               <CardParticleEffect />
@@ -295,10 +310,10 @@ function OurStory() {
           </div>
         </div>
 
-        {/* Ganglia Story Section - Full Width */}
+        {/* Ganglia Story Section - Full Width - NO ANIMATION */}
         <div
           id="ganglia-story"
-          className={`slide-element slide-up ganglia-story-section ${visibleElements.has('ganglia-story') ? 'visible' : ''}`}
+          className="ganglia-story-section"
         >
           <p className="story-subtitle">
             Unsatisfied with existing technology
@@ -308,17 +323,17 @@ function OurStory() {
           </h3>
         </div>
 
-        {/* Philosophy Section */}
+        {/* Philosophy Section - NO ANIMATIONS */}
         <div
           id="philosophy-header"
-          className={`slide-element slide-left philosophy-section ${visibleElements.has('philosophy-header') ? 'visible' : ''}`}
+          className="philosophy-section"
         >
           <h3 className="philosophy-title">Philosophy</h3>
 
           <div className="mission-cards-container">
             <div
               id="mission-card-1"
-              className={`slide-element slide-right mission-card ${visibleElements.has('mission-card-1') ? 'visible' : ''}`}
+              className="mission-card"
             >
               <div className="mission-card-content">
                 <p className="mission-quote">
@@ -333,7 +348,7 @@ function OurStory() {
 
             <div
               id="mission-card-2"
-              className={`slide-element slide-left mission-card ${visibleElements.has('mission-card-2') ? 'visible' : ''}`}
+              className="mission-card"
             >
               <div className="mission-card-content-right">
                 <p className="mission-quote">
@@ -348,7 +363,7 @@ function OurStory() {
             </div>
           </div>
 
-          {/* Our Values */}
+          {/* Our Values - No particle effects */}
           <div className="values-section">
             <h3
               id="values-header"
@@ -387,65 +402,49 @@ function OurStory() {
             </div>
           </div>
 
-          {/* Broader Impact Section */}
+          {/* Broader Impact Section - WITH particle effects - NO ANIMATION */}
           <div className="broader-impact-section">
             <h3
               id="broader-impact-title"
-              className={`slide-element slide-up broader-impact-title ${visibleElements.has('broader-impact-title') ? 'visible' : ''}`}
+              className="broader-impact-title"
             >
               Broader Impact
             </h3>
             <div
               id="broader-impact-content"
-              className={`slide-element slide-up broader-impact-content ${visibleElements.has('broader-impact-content') ? 'visible' : ''}`}
+              className="broader-impact-content"
             >
-              <p className="broader-impact-text">
-                Ganglia Technologies actively collaborates with healthcare leaders, businesses, and government institutions to:
-              </p>
-              <ul className="broader-impact-list">
-                <li className="broader-impact-item">
-                  <span className="feature-bullet">•</span>
-                  <span>Support underserved communities with technology that has the power to save lives and uplift local infrastructure.</span>
-                </li>
-                <li className="broader-impact-item">
-                  <span className="feature-bullet">•</span>
-                  <span>Foster learning environments—helping hospitals, interns, and junior doctors grow through better accountability and knowledge-sharing.</span>
-                </li>
-                <li className="broader-impact-item">
-                  <span className="feature-bullet">•</span>
-                  <span>Drive social change by making transformative technology the new standard—not just a luxury for a select few.</span>
-                </li>
-              </ul>
-              <p className="broader-impact-conclusion">
-                Ganglia Technologies exists not just to build things, but to drive progress, inspire action, and create a future where technology is quietly, powerfully, and meaningfully woven into the everyday lives of people everywhere.
-              </p>
+              <div className="card-overlay">
+                <CardParticleEffect />
+              </div>
+              <div className="card-content">
+                <p className="broader-impact-text">
+                  Ganglia Technologies actively collaborates with healthcare leaders, businesses, and government institutions to:
+                </p>
+                <ul className="broader-impact-list">
+                  <li className="broader-impact-item">
+                    <span className="feature-bullet">•</span>
+                    <span>Support underserved communities with technology that has the power to save lives and uplift local infrastructure.</span>
+                  </li>
+                  <li className="broader-impact-item">
+                    <span className="feature-bullet">•</span>
+                    <span>Foster learning environments—helping hospitals, interns, and junior doctors grow through better accountability and knowledge-sharing.</span>
+                  </li>
+                  <li className="broader-impact-item">
+                    <span className="feature-bullet">•</span>
+                    <span>Drive social change by making transformative technology the new standard—not just a luxury for a select few.</span>
+                  </li>
+                </ul>
+                <p className="broader-impact-conclusion">
+                  Ganglia Technologies exists not just to build things, but to drive progress, inspire action, and create a future where technology is quietly, powerfully, and meaningfully woven into the everyday lives of people everywhere.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Milestones Section */}
-        <div className="milestones-section">
-          <h3
-            id="milestones-header"
-            className={`slide-element slide-up milestones-title ${visibleElements.has('milestones-header') ? 'visible' : ''}`}
-          >
-            Milestones
-          </h3>
-          <div
-            id="milestones-image"
-            className={`slide-element slide-up ${visibleElements.has('milestones-image') ? 'visible' : ''}`}
-          >
-            <img
-              src={getImageSrc(milestonesImage, milestonesImage)}
-              alt="Milestones Timeline"
-              className="milestones-image"
-              onError={(e) => {
-                console.warn("Milestones image failed to load, using fallback");
-                e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='600' viewBox='0 0 1000 600'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0%25' y1='0%25' x2='0%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23001a4d;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23000814;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1000' height='600' fill='url(%23bg)'/%3E%3Cline x1='500' y1='50' x2='500' y2='550' stroke='%2360a5fa' stroke-width='3'/%3E%3Cg%3E%3Ccircle cx='500' cy='100' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='80' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='100' text-anchor='middle' fill='white' font-size='12'%3E2023 - Founded%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='200' r='8' fill='%2360a5fa'/%3E%3Crect x='520' y='180' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='610' y='200' text-anchor='middle' fill='white' font-size='12'%3EFirst Product Launch%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='300' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='280' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='300' text-anchor='middle' fill='white' font-size='12'%3ETeam Expansion%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='400' r='8' fill='%2360a5fa'/%3E%3Crect x='520' y='380' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='610' y='400' text-anchor='middle' fill='white' font-size='12'%3EGlobal Recognition%3C/text%3E%3C/g%3E%3Cg%3E%3Ccircle cx='500' cy='500' r='8' fill='%2360a5fa'/%3E%3Crect x='300' y='480' width='180' height='40' fill='%232563eb' rx='8'/%3E%3Ctext x='390' y='500' text-anchor='middle' fill='white' font-size='12'%3EFuture Vision%3C/text%3E%3C/g%3E%3Ctext x='500' y='40' text-anchor='middle' fill='%2360a5fa' font-size='24' font-weight='bold'%3EOur Journey%3C/text%3E%3C/svg%3E";
-              }}
-            />
-          </div>
-        </div>
+        {/* Tech Milestones Section - REPLACES the old static one */}
+        <TechMilestonesTimeline />
       </div>
        
       <Footer />  
