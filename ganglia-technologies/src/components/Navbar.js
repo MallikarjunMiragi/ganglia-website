@@ -8,6 +8,8 @@ const Navbar = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [lastMouseMove, setLastMouseMove] = useState(Date.now());
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,36 +26,66 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle scroll behavior for mobile
+  // Handle scroll behavior and blur effect
   useEffect(() => {
     const handleScroll = () => {
-      if (!isMobile) return;
-
       const currentScrollY = window.scrollY;
+
+      // Set scrolled state for blur effect
+      setIsScrolled(currentScrollY > 50);
 
       // Show navbar when at top of page (within 50px)
       if (currentScrollY <= 50) {
         setIsVisible(true);
       }
-      // Hide navbar when scrolling down
+      // Hide navbar when scrolling down, show when scrolling up
       else if (currentScrollY > lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
         setIsMobileMenuOpen(false); // Close menu when scrolling
+      }
+      // Show navbar when scrolling up
+      else if (currentScrollY < lastScrollY) {
+        setIsVisible(true);
       }
 
       setLastScrollY(currentScrollY);
     };
 
-    if (isMobile) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      if (isMobile) {
-        window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [lastScrollY]);
+
+  // Handle mouse movement to show navbar
+  useEffect(() => {
+    const handleMouseMove = () => {
+      const now = Date.now();
+      setLastMouseMove(now);
+      
+      // Show navbar on mouse movement if not at top of page
+      if (window.scrollY > 50) {
+        setIsVisible(true);
       }
     };
-  }, [lastScrollY, isMobile]);
+
+    // Hide navbar after 3 seconds of no mouse movement (only if not at top)
+    const hideNavbarTimer = setInterval(() => {
+      const now = Date.now();
+      if (now - lastMouseMove > 3000 && window.scrollY > 100) {
+        setIsVisible(false);
+        setIsMobileMenuOpen(false);
+      }
+    }, 1000);
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      clearInterval(hideNavbarTimer);
+    };
+  }, [lastMouseMove]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -93,10 +125,10 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
-  // New function to handle Our Story navigation
-  const handleOurStoryClick = (e) => {
+  // Updated function to handle About Us navigation (but route to our-story)
+  const handleAboutUsClick = (e) => {
     e.preventDefault();
-    navigate('/our-story');
+    navigate('/our-story'); // Keep the original route
     setIsMobileMenuOpen(false);
   };
 
@@ -124,10 +156,23 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Determine navbar classes based on state
+  const getNavbarClasses = () => {
+    let classes = 'navbar';
+    
+    // Add visibility classes for both mobile and desktop
+    classes += isVisible ? ' navbar-visible' : ' navbar-hidden';
+    
+    // Add blur classes only when scrolled (for all pages)
+    if (isScrolled) {
+      classes += ' navbar-blur-scrolled'; // Light blur when scrolled on any page
+    }
+    
+    return classes;
+  };
+
   return (
-    <nav
-      className={`navbar ${isMobile ? (isVisible ? 'navbar-visible' : 'navbar-hidden') : ''}`}
-    >
+    <nav className={getNavbarClasses()}>
       <div className="logo">
         <img
           src={logo}
@@ -144,9 +189,9 @@ const Navbar = () => {
           <li>
             <a
               href="#our-story"
-              onClick={handleOurStoryClick}
+              onClick={handleAboutUsClick}
             >
-              Our Story
+              About Us
             </a>
           </li>
           <li>
@@ -221,9 +266,9 @@ const Navbar = () => {
               <li>
                 <a
                   href="#our-story"
-                  onClick={handleOurStoryClick}
+                  onClick={handleAboutUsClick}
                 >
-                  Our Story
+                  About Us
                 </a>
               </li>
               <li>

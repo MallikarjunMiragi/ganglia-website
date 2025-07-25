@@ -27,7 +27,7 @@
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   color: var(--dark-bg);
-  
+
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -186,9 +186,6 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(254, 241, 85, 0.4);
 }
-
-
-
 
 .careers-hero-stats {
   display: flex;
@@ -473,7 +470,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-
 .careers-logo {
   height: 60px;
   width: auto;
@@ -503,7 +499,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   min-height: 140px; /* Add minimum height for consistency */
 }
-
 
 .careers-internship-content {
   padding: 0 20px 80px;
@@ -699,7 +694,6 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-
 
 /* Responsive Design */
 @media (max-width: 768px) {
@@ -1163,5 +1157,40 @@
   .careers-benefit-card {
     padding: 60px 50px;
     min-height: 320px;
+  }
+}
+@media (max-width: 768px) {
+  .careers-internship-title-container {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 30px; /* Reduced from 45px to 20px */
+    min-height: 80px; /* Reduced from 140px to 80px */
+  }
+
+  .careers-logo {
+    height: 40px; /* Reduced from 60px to 40px */
+    width: auto;
+  }
+
+  .careers-internship-title {
+    font-size: 1.8rem; /* Reduced size for mobile */
+    line-height: 1.2; /* Better line height for smaller text */
+  }
+}
+
+@media (max-width: 480px) {
+  .careers-internship-title-container {
+    padding: 15px 20px; /* Even smaller padding for very small screens */
+    gap: 8px;
+    min-height: 70px; /* Further reduced height */
+  }
+
+  .careers-logo {
+    height: 35px; /* Even smaller logo */
+  }
+
+  .careers-internship-title {
+    font-size: 1.4rem; /* Smaller text for very small screens */
+    letter-spacing: 0.5px; /* Reduced letter spacing */
   }
 }

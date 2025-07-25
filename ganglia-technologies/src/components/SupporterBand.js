@@ -4,6 +4,7 @@ import logo2 from '../assets/2.png';
 import logo3 from '../assets/3.png';
 import logo4 from '../assets/4.png';
 import logo5 from '../assets/5.png';
+import '../styles/SupporterBand.css';
 
 const SupporterBand = () => {
   const supporterLogos = [
@@ -24,7 +25,7 @@ const SupporterBand = () => {
               key={`${setIndex}-${logoIndex}`}
               src={logo.src} 
               alt={logo.alt} 
-              className="supporter-logo" 
+              className="supporter-logo"
             />
           ))
         ))}
