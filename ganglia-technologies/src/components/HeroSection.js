@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Add this import
 import '../styles/App.css';
 
 const HeroSection = () => {
-  const navigate = useNavigate(); // Add this hook
   const [glitchState, setGlitchState] = useState({
     visibleLetters: [true, true, true, true, true, true, true, true, true, true, true], // "Unsatisfied"
     letterGlitches: Array(11).fill(false) // Track which letters have missing parts
@@ -105,11 +103,6 @@ const HeroSection = () => {
     });
   };
 
-  // Add click handler for the Learn More button
-  const handleLearnMoreClick = () => {
-    navigate('/our-story');
-  };
-
   return (
     <div className="hero-content">
       <div className="hero-text">
@@ -123,9 +116,7 @@ const HeroSection = () => {
           Revolutionising AI healthcare with accessible, efficient, and
           future-ready solutions.
         </p>
-        <button className="learn-more-btn" onClick={handleLearnMoreClick}>
-          Learn More
-        </button>
+        <button className="learn-more-btn">Learn More</button>
       </div>
     </div>
   );

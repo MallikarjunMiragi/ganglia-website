@@ -73,7 +73,7 @@ const OurTeam = () => {
         }
       );
 
-      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+      document.querySelectorAll('.ourteam-animate-on-scroll').forEach((el) => {
         observer.observe(el);
       });
 
@@ -90,34 +90,46 @@ const OurTeam = () => {
   );
 
   const TeamMember = ({ member, isIntern = false }) => (
-    <div className={`team-member ${isIntern ? 'intern-member' : ''}`}>
-      <div className={`member-photo ${isIntern ? 'intern-photo' : ''}`}>
+    <div className={`ourteam-member ${isIntern ? 'ourteam-intern-member' : ''}`}>
+      <div className={`ourteam-member-photo ${isIntern ? 'ourteam-intern-photo' : ''}`}>
         <img src={member.imageSrc || member.image} alt={member.alt} />
-        <div className="linkedin-icon">
+        <div className="ourteam-linkedin-icon">
           <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
             <LinkedInIcon />
           </a>
         </div>
       </div>
       <h3>{member.name}</h3>
-      <p className="role">{member.role}</p>
+      <p className="ourteam-role">{member.role}</p>
     </div>
   );
 
   if (loading) {
-    return <div className="loading">Loading team data...</div>;
+    return (
+      <div className="ourteam-loading">
+        <div className="ourteam-spinner"></div>
+        <p>Loading team data...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <div className="ourteam-error">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
     <div>
-      <section className="hero-section">
-        <div className="container">
+      <section className="ourteam-hero-section">
+        <div className="ourteam-container">
           <h1>Our Team</h1>
-          <div className="hero-content">
+          <div className="ourteam-hero-content">
             <p>
               <strong>Innovation is driven by visionaries:</strong> Founders with engineering and
               medical excellence, AI pioneers, global collaborators. Our culture is bold ideas,
@@ -125,16 +137,16 @@ const OurTeam = () => {
               breakthroughs thrive at intersections of different perspectives and experiences.
             </p>
           </div>
-          <h2 className="section-subtitle">Meet the Minds Behind Ganglia</h2>
+          <h2 className="ourteam-section-subtitle">Meet the Minds Behind Ganglia</h2>
         </div>
       </section>
 
-      <section className="team-section">
-        <div className="container">
-          <h2 className="team-title">Founding Team</h2>
-          <div className="contact-form animate-on-scroll">
-            <div className="info animate-on-scroll">
-              <div className="team-grid">
+      <section className="ourteam-section">
+        <div className="ourteam-container">
+          <h2 className="ourteam-title">Founding Team</h2>
+          <div className="ourteam-contact-form ourteam-animate-on-scroll">
+            <div className="ourteam-info ourteam-animate-on-scroll">
+              <div className="ourteam-founding-grid">
                 {foundingTeam.map((member) => (
                   <TeamMember key={member.id} member={member} />
                 ))}
@@ -144,12 +156,12 @@ const OurTeam = () => {
         </div>
       </section>
 
-      <section className="team-section management-section">
-        <div className="container">
-          <h2 className="team-title">Management Team</h2>
-          <div className="contact-form animate-on-scroll">
-            <div className="info animate-on-scroll">
-              <div className="management-grid">
+      <section className="ourteam-section ourteam-management-section">
+        <div className="ourteam-container">
+          <h2 className="ourteam-title">Management Team</h2>
+          <div className="ourteam-contact-form ourteam-animate-on-scroll">
+            <div className="ourteam-info ourteam-animate-on-scroll">
+              <div className="ourteam-management-grid">
                 {managementTeam.map((member) => (
                   <TeamMember key={member.id} member={member} />
                 ))}
@@ -159,12 +171,12 @@ const OurTeam = () => {
         </div>
       </section>
 
-      <section className="team-section intern-section">
-        <div className="container">
-          <h2 className="team-title">Intern Team</h2>
-          <div className="contact-form animate-on-scroll">
-            <div className="info animate-on-scroll">
-              <div className="intern-grid">
+      <section className="ourteam-section ourteam-intern-section">
+        <div className="ourteam-container">
+          <h2 className="ourteam-title">Intern Team</h2>
+          <div className="ourteam-contact-form ourteam-animate-on-scroll">
+            <div className="ourteam-info ourteam-animate-on-scroll">
+              <div className="ourteam-intern-grid">
                 {internTeam.map((member) => (
                   <TeamMember key={member.id} member={member} isIntern={true} />
                 ))}
