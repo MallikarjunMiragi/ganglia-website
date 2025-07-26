@@ -246,7 +246,7 @@ const Navbar = () => {
       link: '/ai-powered-tools',
       isHeader: true,
       items: [
-        { label: 'TripMachaAI – Short Trip Planner', link: '/tripmachaai' },
+        { label: 'TripMacha AI – Short Trip Planner', link: '/tripmacha' }, // ← Updated link
         { label: 'Anushtaan – Project Management Tool', link: '/anushtaan' },
         { label: 'Medical Logbook', link: '/medical-logbook' }
       ]
@@ -267,12 +267,22 @@ const Navbar = () => {
     }
   ];
 
+  // ← Updated renderDropdownMenu function
   const renderDropdownMenu = (items, isOpen) => (
     <div className={`dropdown-menu ${isOpen ? 'active' : ''}`}>
       <div className="dropdown-section">
         {items.map((section, index) => (
           <div key={index} className="dropdown-category">
-            <a href={section.link} className="dropdown-item category-header">
+            <a 
+              href={section.link} 
+              className="dropdown-item category-header"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(section.link);
+                setIsMobileMenuOpen(false);
+                setDropdownStates({ about: false, products: false, services: false });
+              }}
+            >
               {section.category}
             </a>
             <div className="dropdown-subsection">
@@ -281,6 +291,12 @@ const Navbar = () => {
                   key={itemIndex}
                   href={item.link} 
                   className={`dropdown-item ${item.highlighted ? 'highlighted' : ''}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate(item.link);
+                    setIsMobileMenuOpen(false);
+                    setDropdownStates({ about: false, products: false, services: false });
+                  }}
                 >
                   {item.label}
                 </a>
