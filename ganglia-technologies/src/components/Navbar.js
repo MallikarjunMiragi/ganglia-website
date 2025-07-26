@@ -10,6 +10,10 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [lastMouseMove, setLastMouseMove] = useState(Date.now());
+  const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
+  const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+
   
   const navigate = useNavigate();
   const location = useLocation();
@@ -186,31 +190,119 @@ const Navbar = () => {
       {/* Desktop Navigation */}
       <div className={`navbar-right ${isMobile ? 'navbar-desktop-hidden' : ''}`}>
         <ul className="nav-links">
-          <li>
-            <a
-              href="#our-story"
-              onClick={handleAboutUsClick}
-            >
-              About Us
-            </a>
-          </li>
-          <li>
-            <a
-              href="#products"
-              onClick={(e) => handleNavClick(e, 'products')}
-            >
-              Products
-            </a>
-          </li>
-          <li>
-            <a 
-              href="#services" 
-              onClick={(e) => handleNavClick(e, 'services')}
-            >
-              Services
-            </a>
-          </li>
-          <li>
+          <li 
+  className="dropdown-container"
+  onMouseEnter={() => setIsAboutDropdownOpen(true)}
+  onMouseLeave={() => setIsAboutDropdownOpen(false)}
+>
+  <a 
+  href="/our-story" 
+  className="dropdown-trigger"
+  onClick={(e) => {
+    navigate('/our-story');
+  }}
+>
+    About Us
+    <span className="dropdown-arrow">▼</span>
+  </a>
+  <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
+    <div className="dropdown-section">
+      <div className="dropdown-category">
+        <a href="/our-story" className="dropdown-item category-header">Our Story</a>
+        <div className="dropdown-subsection">
+          <a href="/philosophy" className="dropdown-item">Philosophy</a>
+          <a href="/milestone" className="dropdown-item">Milestone</a>
+          <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
+        </div>
+      </div>
+      <div className="dropdown-category">
+        <a href="/our-team" className="dropdown-item category-header">Our Team</a>
+        <div className="dropdown-subsection">
+          <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
+          <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
+          <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+
+
+
+          <li
+  className="dropdown-container"
+  onMouseEnter={() => setIsProductsDropdownOpen(true)}
+  onMouseLeave={() => setIsProductsDropdownOpen(false)}
+>
+  <a href="#products" className="dropdown-trigger">
+    Products
+    <span className="dropdown-arrow">▼</span>
+  </a>
+
+  <div className={`dropdown-menu ${isProductsDropdownOpen ? 'active' : ''}`}>
+    <div className="dropdown-section">
+      <div className="dropdown-category">
+        <a href="/health-tech" className="dropdown-item category-header">
+          Health Tech
+        </a>
+        <div className="dropdown-subsection">
+          <a href="/smart-video-laryngoscope" className="dropdown-item">
+            Smart Video Laryngoscope
+          </a>
+          <a href="/mobile-icu" className="dropdown-item">Mobile ICU</a>
+          <a href="/medical-thermal-imaging" className="dropdown-item">
+            Medical Thermal-Imaging System
+          </a>
+          <a href="/medical-drone" className="dropdown-item">Medical Drone</a>
+        </div>
+      </div>
+
+      <div className="dropdown-category">
+        <a href="/ai-powered-tools" className="dropdown-item category-header">
+          AI-Powered Tools
+        </a>
+        <div className="dropdown-subsection">
+          <a href="/tripmachaai" className="dropdown-item">
+            TripMachaAI – Short Trip Planner
+          </a>
+          <a href="/anushtaan" className="dropdown-item">
+            Anushtaan – Project Management Tool
+          </a>
+          <a href="/medical-logbook" className="dropdown-item">
+            Medical Logbook
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+
+
+<li
+  className="dropdown-container"
+  onMouseEnter={() => setIsServicesDropdownOpen(true)}
+  onMouseLeave={() => setIsServicesDropdownOpen(false)}
+>
+  <a href="#services" className="dropdown-trigger">
+    Services
+    <span className="dropdown-arrow">▼</span>
+  </a>
+  <div className={`dropdown-menu ${isServicesDropdownOpen ? 'active' : ''}`}>
+    <div className="dropdown-section">
+      <div className="dropdown-category">
+        <a href="/healthcare-tech" className="dropdown-item category-header">Our Products</a>
+        <div className="dropdown-subsection">
+          <a href="/medical-enterprise-software" className="dropdown-item">Healthcare Tech</a>
+          <a href="/consulting-custom-development" className="dropdown-item">Medical Enterprise Software</a>
+          <a href="/consulting-custom-development" className="dropdown-item">Consulting & Custom Development</a>
+          <a href="/consulting-custom-development" className="dropdown-item">AI Powered Applications</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</li>
+<li>
             <a 
               href="#research" 
               onClick={(e) => handleNavClick(e, 'research')}
@@ -263,14 +355,30 @@ const Navbar = () => {
           {/* Mobile Menu Overlay */}
           <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'active' : ''}`}>
             <ul className="mobile-nav-links">
-              <li>
-                <a
-                  href="#our-story"
-                  onClick={handleAboutUsClick}
-                >
-                  About Us
-                </a>
-              </li>
+   <li>
+  className="dropdown-container"
+  onMouseEnter={() => setIsAboutDropdownOpen(true)}
+  onMouseLeave={() => setIsAboutDropdownOpen(false)}
+
+  <a href="#about" className="dropdown-trigger">
+    About Us
+    <span className="dropdown-arrow">▼</span>
+  </a>
+  <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
+    <div className="dropdown-section">
+      <a href="/our-story" className="dropdown-item">Our Story</a>
+      <a href="/philosophy" className="dropdown-item">Philosophy</a>
+      <a href="/milestone" className="dropdown-item">Milestone</a>
+      <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
+    </div>
+    <div className="dropdown-section">
+      <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
+      <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
+      <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
+    </div>
+  </div>
+</li>
+
               <li>
                 <a
                   href="#products"

@@ -69,6 +69,174 @@
   color: #fef155;
 }
 
+
+/* Add these dropdown styles to your existing CSS - DO NOT REPLACE ANYTHING */
+
+/* Dropdown Styles */
+.dropdown-container {
+  position: relative;
+}
+
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdown-arrow {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-container:hover .dropdown-arrow {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 4, 38, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  margin-top: 10px;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dropdown-item {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(254, 241, 85, 0.1);
+  color: #fef155;
+  transform: translateX(5px);
+}
+
+.dropdown-item.highlighted {
+  color: #fef155;
+  text-decoration: underline;
+}
+
+.navbar-right {
+  position: relative;
+  z-index: 10000;
+}
+
+/* Update the existing dropdown-menu to be single column */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 4, 38, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 400px;
+  display: block; /* Changed from grid */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-50%) translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 10001;
+  margin-top: 10px;
+}
+
+.dropdown-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dropdown-category {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.category-header {
+  font-weight: 600;
+  color: #fef155 !important;
+  min-width: 120px;
+  text-decoration: none !important;
+}
+
+.dropdown-subsection {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 15px !important;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+/* Make sure dropdown items work well in horizontal layout */
+.dropdown-subsection .dropdown-item {
+  white-space: nowrap; /* Prevents text from wrapping within each item */
+  min-width: auto;
+}
+
+
+.dropdown-item {
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: rgba(254, 241, 85, 0.1);
+  color: #fef155;
+  transform: translateX(5px);
+}
+
+.dropdown-item.highlighted {
+  color: #ffffff;
+  text-decoration: none !important;
+}
+
+/* Prevent hover effects on category headers */
+.category-header:hover {
+  background: none !important;
+  transform: none !important;
+}
+
 /* Add a subtle hover effect */
 .nav-links a::after {
   content: "";
@@ -278,3 +446,6 @@
     height: 55px;
   }
 }
+
+
+
