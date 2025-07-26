@@ -14,7 +14,6 @@ const Navbar = () => {
   const [isProductsDropdownOpen, setIsProductsDropdownOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
-  
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -136,6 +135,14 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  // Add function to handle Our Team navigation
+  const handleOurTeamClick = (e) => {
+    e.preventDefault();
+    navigate('/our-team');
+    setIsMobileMenuOpen(false);
+    setIsAboutDropdownOpen(false); // Close dropdown
+  };
+
   const handleLogoClick = () => {
     // Navigate to home page
     navigate('/');
@@ -191,118 +198,126 @@ const Navbar = () => {
       <div className={`navbar-right ${isMobile ? 'navbar-desktop-hidden' : ''}`}>
         <ul className="nav-links">
           <li 
-  className="dropdown-container"
-  onMouseEnter={() => setIsAboutDropdownOpen(true)}
-  onMouseLeave={() => setIsAboutDropdownOpen(false)}
->
-  <a 
-  href="/our-story" 
-  className="dropdown-trigger"
-  onClick={(e) => {
-    navigate('/our-story');
-  }}
->
-    About Us
-    <span className="dropdown-arrow">▼</span>
-  </a>
-  <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
-    <div className="dropdown-section">
-      <div className="dropdown-category">
-        <a href="/our-story" className="dropdown-item category-header">Our Story</a>
-        <div className="dropdown-subsection">
-          <a href="/philosophy" className="dropdown-item">Philosophy</a>
-          <a href="/milestone" className="dropdown-item">Milestone</a>
-          <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
-        </div>
-      </div>
-      <div className="dropdown-category">
-        <a href="/our-team" className="dropdown-item category-header">Our Team</a>
-        <div className="dropdown-subsection">
-          <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
-          <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
-          <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</li>
-
-
+            className="dropdown-container"
+            onMouseEnter={() => setIsAboutDropdownOpen(true)}
+            onMouseLeave={() => setIsAboutDropdownOpen(false)}
+          >
+            <a 
+              href="/our-story" 
+              className="dropdown-trigger"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/our-story');
+              }}
+            >
+              About Us
+              <span className="dropdown-arrow">▼</span>
+            </a>
+            <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
+              <div className="dropdown-section">
+                <div className="dropdown-category">
+                  <a href="/our-story" className="dropdown-item category-header" onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/our-story');
+                    setIsAboutDropdownOpen(false);
+                  }}>Our Story</a>
+                  <div className="dropdown-subsection">
+                    <a href="/philosophy" className="dropdown-item">Philosophy</a>
+                    <a href="/milestone" className="dropdown-item">Milestone</a>
+                    <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
+                  </div>
+                </div>
+                <div className="dropdown-category">
+                  <a 
+                    href="/our-team" 
+                    className="dropdown-item category-header" 
+                    onClick={handleOurTeamClick}
+                  >
+                    Our Team
+                  </a>
+                  <div className="dropdown-subsection">
+                    <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
+                    <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
+                    <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
 
           <li
-  className="dropdown-container"
-  onMouseEnter={() => setIsProductsDropdownOpen(true)}
-  onMouseLeave={() => setIsProductsDropdownOpen(false)}
->
-  <a href="#products" className="dropdown-trigger">
-    Products
-    <span className="dropdown-arrow">▼</span>
-  </a>
+            className="dropdown-container"
+            onMouseEnter={() => setIsProductsDropdownOpen(true)}
+            onMouseLeave={() => setIsProductsDropdownOpen(false)}
+          >
+            <a href="#products" className="dropdown-trigger">
+              Products
+              <span className="dropdown-arrow">▼</span>
+            </a>
 
-  <div className={`dropdown-menu ${isProductsDropdownOpen ? 'active' : ''}`}>
-    <div className="dropdown-section">
-      <div className="dropdown-category">
-        <a href="/health-tech" className="dropdown-item category-header">
-          Health Tech
-        </a>
-        <div className="dropdown-subsection">
-          <a href="/smart-video-laryngoscope" className="dropdown-item">
-            Smart Video Laryngoscope
-          </a>
-          <a href="/mobile-icu" className="dropdown-item">Mobile ICU</a>
-          <a href="/medical-thermal-imaging" className="dropdown-item">
-            Medical Thermal-Imaging System
-          </a>
-          <a href="/medical-drone" className="dropdown-item">Medical Drone</a>
-        </div>
-      </div>
+            <div className={`dropdown-menu ${isProductsDropdownOpen ? 'active' : ''}`}>
+              <div className="dropdown-section">
+                <div className="dropdown-category">
+                  <a href="/health-tech" className="dropdown-item category-header">
+                    Health Tech
+                  </a>
+                  <div className="dropdown-subsection">
+                    <a href="/smart-video-laryngoscope" className="dropdown-item">
+                      Smart Video Laryngoscope
+                    </a>
+                    <a href="/mobile-icu" className="dropdown-item">Mobile ICU</a>
+                    <a href="/medical-thermal-imaging" className="dropdown-item">
+                      Medical Thermal-Imaging System
+                    </a>
+                    <a href="/medical-drone" className="dropdown-item">Medical Drone</a>
+                  </div>
+                </div>
 
-      <div className="dropdown-category">
-        <a href="/ai-powered-tools" className="dropdown-item category-header">
-          AI-Powered Tools
-        </a>
-        <div className="dropdown-subsection">
-          <a href="/tripmachaai" className="dropdown-item">
-            TripMachaAI – Short Trip Planner
-          </a>
-          <a href="/anushtaan" className="dropdown-item">
-            Anushtaan – Project Management Tool
-          </a>
-          <a href="/medical-logbook" className="dropdown-item">
-            Medical Logbook
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</li>
+                <div className="dropdown-category">
+                  <a href="/ai-powered-tools" className="dropdown-item category-header">
+                    AI-Powered Tools
+                  </a>
+                  <div className="dropdown-subsection">
+                    <a href="/tripmachaai" className="dropdown-item">
+                      TripMachaAI – Short Trip Planner
+                    </a>
+                    <a href="/anushtaan" className="dropdown-item">
+                      Anushtaan – Project Management Tool
+                    </a>
+                    <a href="/medical-logbook" className="dropdown-item">
+                      Medical Logbook
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
 
-
-<li
-  className="dropdown-container"
-  onMouseEnter={() => setIsServicesDropdownOpen(true)}
-  onMouseLeave={() => setIsServicesDropdownOpen(false)}
->
-  <a href="#services" className="dropdown-trigger">
-    Services
-    <span className="dropdown-arrow">▼</span>
-  </a>
-  <div className={`dropdown-menu ${isServicesDropdownOpen ? 'active' : ''}`}>
-    <div className="dropdown-section">
-      <div className="dropdown-category">
-        <a href="/healthcare-tech" className="dropdown-item category-header">Our Products</a>
-        <div className="dropdown-subsection">
-          <a href="/medical-enterprise-software" className="dropdown-item">Healthcare Tech</a>
-          <a href="/consulting-custom-development" className="dropdown-item">Medical Enterprise Software</a>
-          <a href="/consulting-custom-development" className="dropdown-item">Consulting & Custom Development</a>
-          <a href="/consulting-custom-development" className="dropdown-item">AI Powered Applications</a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</li>
-<li>
+          <li
+            className="dropdown-container"
+            onMouseEnter={() => setIsServicesDropdownOpen(true)}
+            onMouseLeave={() => setIsServicesDropdownOpen(false)}
+          >
+            <a href="#services" className="dropdown-trigger">
+              Services
+              <span className="dropdown-arrow">▼</span>
+            </a>
+            <div className={`dropdown-menu ${isServicesDropdownOpen ? 'active' : ''}`}>
+              <div className="dropdown-section">
+                <div className="dropdown-category">
+                  <a href="/healthcare-tech" className="dropdown-item category-header">Our Products</a>
+                  <div className="dropdown-subsection">
+                    <a href="/medical-enterprise-software" className="dropdown-item">Healthcare Tech</a>
+                    <a href="/consulting-custom-development" className="dropdown-item">Medical Enterprise Software</a>
+                    <a href="/consulting-custom-development" className="dropdown-item">Consulting & Custom Development</a>
+                    <a href="/consulting-custom-development" className="dropdown-item">AI Powered Applications</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          
+          <li>
             <a 
               href="#research" 
               onClick={(e) => handleNavClick(e, 'research')}
@@ -355,29 +370,40 @@ const Navbar = () => {
           {/* Mobile Menu Overlay */}
           <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'active' : ''}`}>
             <ul className="mobile-nav-links">
-   <li>
-  className="dropdown-container"
-  onMouseEnter={() => setIsAboutDropdownOpen(true)}
-  onMouseLeave={() => setIsAboutDropdownOpen(false)}
-
-  <a href="#about" className="dropdown-trigger">
-    About Us
-    <span className="dropdown-arrow">▼</span>
-  </a>
-  <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
-    <div className="dropdown-section">
-      <a href="/our-story" className="dropdown-item">Our Story</a>
-      <a href="/philosophy" className="dropdown-item">Philosophy</a>
-      <a href="/milestone" className="dropdown-item">Milestone</a>
-      <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
-    </div>
-    <div className="dropdown-section">
-      <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
-      <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
-      <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
-    </div>
-  </div>
-</li>
+              <li
+                className="dropdown-container"
+                onMouseEnter={() => setIsAboutDropdownOpen(true)}
+                onMouseLeave={() => setIsAboutDropdownOpen(false)}
+              >
+                <a href="#about" className="dropdown-trigger">
+                  About Us
+                  <span className="dropdown-arrow">▼</span>
+                </a>
+                <div className={`dropdown-menu ${isAboutDropdownOpen ? 'active' : ''}`}>
+                  <div className="dropdown-section">
+                    <a href="/our-story" className="dropdown-item" onClick={(e) => {
+                      e.preventDefault();
+                      navigate('/our-story');
+                      setIsMobileMenuOpen(false);
+                    }}>Our Story</a>
+                    <a href="/philosophy" className="dropdown-item">Philosophy</a>
+                    <a href="/milestone" className="dropdown-item">Milestone</a>
+                    <a href="/social-responsibility" className="dropdown-item">Social Responsibility</a>
+                  </div>
+                  <div className="dropdown-section">
+                    <a 
+                      href="/our-team" 
+                      className="dropdown-item highlighted" 
+                      onClick={handleOurTeamClick}
+                    >
+                      Our Team
+                    </a>
+                    <a href="/leadership-team" className="dropdown-item highlighted">Leadership Team</a>
+                    <a href="/management-team" className="dropdown-item highlighted">Management Team</a>
+                    <a href="/intern-team" className="dropdown-item highlighted">Intern Team</a>
+                  </div>
+                </div>
+              </li>
 
               <li>
                 <a
