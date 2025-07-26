@@ -1194,3 +1194,10 @@
     letter-spacing: 0.5px; /* Reduced letter spacing */
   }
 }
+.careers-section-header h2 .careers-ganglia-highlight {
+  color: #fef155 !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: #fef155 !important;
+  background-clip: unset !important;
+}

@@ -154,7 +154,9 @@ function OurStory() {
               <CardParticleEffect />
             </div>
             <div className="card-content">
-              <h3 className="section-title">Why We Exist</h3>
+              <h3 className="section-title">
+                <span className="yellow-highlight">Why</span> We Exist
+              </h3>
               <p className="section-text">
                 At Ganglia Technologies, we believe in a future where world-class
                 healthcare and technological automation are not luxuries for the
@@ -175,7 +177,9 @@ function OurStory() {
               <CardParticleEffect />
             </div>
             <div className="card-content">
-              <h3 className="section-title">How we do it</h3>
+              <h3 className="section-title">
+                <span className="yellow-highlight">How</span> we do it
+              </h3>
               <p className="section-text-with-margin">
                 We challenge the status quo by blending deep engineering, medical
                 expertise, and actual human empathy. For us, technology is not
@@ -219,7 +223,9 @@ function OurStory() {
               <CardParticleEffect />
             </div>
             <div className="card-content">
-              <h3 className="section-title">What We Create</h3>
+              <h3 className="section-title">
+                <span className="yellow-highlight">What</span> We Create
+              </h3>
               <p className="section-text-with-margin">
                 We build solutions that don't just work—they inspire.
               </p>
