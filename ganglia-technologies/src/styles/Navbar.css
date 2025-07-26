@@ -69,9 +69,6 @@
   color: #fef155;
 }
 
-
-/* Add these dropdown styles to your existing CSS - DO NOT REPLACE ANYTHING */
-
 /* Dropdown Styles */
 .dropdown-container {
   position: relative;
@@ -92,6 +89,7 @@
   transform: rotate(180deg);
 }
 
+/* Updated dropdown menu with better spacing and separators */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -103,9 +101,7 @@
   border-radius: 12px;
   padding: 20px;
   min-width: 400px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  display: block;
   opacity: 0;
   visibility: hidden;
   transform: translateX(-50%) translateY(-10px);
@@ -121,70 +117,43 @@
   transform: translateX(-50%) translateY(0);
 }
 
+/* Updated dropdown section with increased gap between major sections */
 .dropdown-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-}
-
-.dropdown-item {
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 400;
-  padding: 8px 12px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
-
-.dropdown-item:hover {
-  background: rgba(254, 241, 85, 0.1);
-  color: #fef155;
-  transform: translateX(5px);
-}
-
-.dropdown-item.highlighted {
-  color: #fef155;
-  text-decoration: underline;
-}
-
-.navbar-right {
-  position: relative;
-  z-index: 10000;
-}
-
-/* Update the existing dropdown-menu to be single column */
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 4, 38, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 20px;
-  min-width: 400px;
-  display: block; /* Changed from grid */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-50%) translateY(-10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-  z-index: 10001;
-  margin-top: 10px;
-}
-
-.dropdown-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  gap: 35px; /* Increased gap between major sections */
 }
 
 .dropdown-category {
   display: flex;
   align-items: flex-start;
   gap: 40px;
+  position: relative;
+  padding-bottom: 17px;
+  margin-bottom: 18px;
+}
+
+/* Add separator line after each major category except the last one */
+.dropdown-category:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.dropdown-category:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.2) 80%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
 }
 
 .category-header {
@@ -192,12 +161,14 @@
   color: #fef155 !important;
   min-width: 120px;
   text-decoration: none !important;
+  position: relative;
 }
 
+/* Reduced gap between items within the same subsection */
 .dropdown-subsection {
   display: flex !important;
   flex-direction: row !important;
-  gap: 15px !important;
+  gap: 8px !important; /* Reduced from 15px to 8px for closer grouping */
   flex: 1;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -205,10 +176,10 @@
 
 /* Make sure dropdown items work well in horizontal layout */
 .dropdown-subsection .dropdown-item {
-  white-space: nowrap; /* Prevents text from wrapping within each item */
+  white-space: nowrap;
   min-width: auto;
+  margin-right: 4px; /* Small additional spacing */
 }
-
 
 .dropdown-item {
   color: #fff;
@@ -235,6 +206,11 @@
 .category-header:hover {
   background: none !important;
   transform: none !important;
+}
+
+.navbar-right {
+  position: relative;
+  z-index: 10000;
 }
 
 /* Add a subtle hover effect */
@@ -446,6 +422,3 @@
     height: 55px;
   }
 }
-
-
-
