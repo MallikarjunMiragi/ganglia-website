@@ -1436,3 +1436,66 @@
     padding: 0.2rem 0.6rem;
   }
 }
+/* Replace the existing shiny border streak effect with this more subtle version */
+
+/* Reduced shiny border streak effect - much more subtle */
+.stacking-card::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(255, 255, 255, 0.15) 45%,
+    rgba(96, 165, 250, 0.2) 50%,
+    rgba(255, 255, 255, 0.15) 55%,
+    transparent 65%,
+    transparent 100%
+  );
+  border-radius: 18px;
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-size: 200% 100%;
+  filter: blur(0.8px);
+  box-shadow: 0 0 8px rgba(96, 165, 250, 0.3);
+}
+
+.stacking-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(37, 99, 235, 0.15);
+  border-radius: 16px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.stacking-card:hover::before {
+  animation: shinyBorderStreak 1.5s ease-in-out;
+}
+
+/* Updated animation for more subtle effect */
+@keyframes shinyBorderStreak {
+  0% {
+    background-position: -100% 0;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    background-position: 100% 0;
+    opacity: 0;
+  }
+}
