@@ -1,319 +1,44 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../styles/Footer.css';
-import logo from '../assets/log.png'; // Add this import
+import logo from '../assets/log.png';
 
 const Footer = () => {
-  const canvasRef = useRef(null);
-  const overlayRef = useRef(null);
-  const footerRef = useRef(null);
-  const networkRef = useRef(null);
-  const mountedRef = useRef(true);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  useEffect(() => {
-    // Reset mounted ref
-    mountedRef.current = true;
-
-    class NetworkMesh {
-      constructor(canvas, overlay, footerElement) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.overlay = overlay;
-        this.footerElement = footerElement;
-        
-        this.nodes = [];
-        this.mouse = { x: 0, y: 0 };
-        this.isMouseInside = false;
-        this.animationFrame = null;
-        
-        // Enhanced network parameters for denser mesh
-        this.nodeCount = 200; // Increased from 120
-        this.maxDistance = 100; // Reduced from 120 for more connections
-        this.mouseRadius = 180; // Increased interaction radius
-        
-        this.init();
-      }
-      
-      init() {
-        this.resizeCanvas();
-        this.createNodes();
-        this.bindEvents();
-        this.animate();
-        
-        // Handle window resize
-        this.resizeHandler = () => this.resizeCanvas();
-        window.addEventListener('resize', this.resizeHandler);
-      }
-      
-      resizeCanvas() {
-        if (!this.canvas) return;
-        
-        const footer = this.canvas.closest('.footer');
-        if (footer) {
-          this.canvas.width = footer.offsetWidth;
-          this.canvas.height = footer.offsetHeight;
-        }
-        
-        // Recreate nodes when canvas is resized
-        if (this.canvas.width > 0 && this.canvas.height > 0) {
-          this.createNodes();
-        }
-      }
-      
-      createNodes() {
-        this.nodes = [];
-        if (!this.canvas || this.canvas.width === 0 || this.canvas.height === 0) return;
-        
-        for (let i = 0; i < this.nodeCount; i++) {
-          this.nodes.push({
-            x: Math.random() * this.canvas.width,
-            y: Math.random() * this.canvas.height,
-            vx: (Math.random() - 0.5) * 0.3, // Slightly slower movement
-            vy: (Math.random() - 0.5) * 0.3,
-            radius: Math.random() * 1.5 + 0.8, // Slightly smaller nodes
-            opacity: Math.random() * 0.4 + 0.6, // Higher base opacity
-            pulsePhase: Math.random() * Math.PI * 2
-          });
-        }
-      }
-      
-      bindEvents() {
-        if (!this.footerElement) return;
-        
-        // Bind events to the entire footer instead of just canvas
-        this.mouseMoveHandler = (e) => {
-          const rect = this.footerElement.getBoundingClientRect();
-          this.mouse.x = e.clientX - rect.left;
-          this.mouse.y = e.clientY - rect.top;
-          this.updateBrightnessOverlay(e.clientX, e.clientY);
-        };
-        
-        this.mouseEnterHandler = () => {
-          this.isMouseInside = true;
-        };
-        
-        this.mouseLeaveHandler = () => {
-          this.isMouseInside = false;
-          if (this.overlay) {
-            this.overlay.style.background = 'radial-gradient(circle at 50% 50%, rgba(100, 149, 237, 0) 0%, rgba(100, 149, 237, 0) 100%)';
-          }
-        };
-        
-        // Attach events to footer element for full interactivity
-        this.footerElement.addEventListener('mousemove', this.mouseMoveHandler);
-        this.footerElement.addEventListener('mouseenter', this.mouseEnterHandler);
-        this.footerElement.addEventListener('mouseleave', this.mouseLeaveHandler);
-      }
-      
-      updateBrightnessOverlay(clientX, clientY) {
-        if (!this.overlay) return;
-        
-        const x = (clientX / window.innerWidth) * 100;
-        const y = (clientY / window.innerHeight) * 100;
-        
-        this.overlay.style.background = `
-          radial-gradient(circle 400px at ${x}% ${y}%, 
-            rgba(100, 149, 237, 0.2) 0%, 
-            rgba(100, 149, 237, 0.12) 30%, 
-            rgba(100, 149, 237, 0.06) 60%,
-            rgba(100, 149, 237, 0) 100%)
-        `;
-      }
-      
-      updateNodes() {
-        this.nodes.forEach(node => {
-          // Update position
-          node.x += node.vx;
-          node.y += node.vy;
-          
-          // Bounce off edges
-          if (node.x < 0 || node.x > this.canvas.width) node.vx *= -1;
-          if (node.y < 0 || node.y > this.canvas.height) node.vy *= -1;
-          
-          // Keep nodes in bounds
-          node.x = Math.max(0, Math.min(this.canvas.width, node.x));
-          node.y = Math.max(0, Math.min(this.canvas.height, node.y));
-          
-          // Pulse effect
-          node.pulsePhase += 0.015; // Slightly slower pulse
-          node.currentOpacity = node.opacity + Math.sin(node.pulsePhase) * 0.2;
-        });
-      }
-      
-      getNodeBrightness(node) {
-        if (!this.isMouseInside) return 1;
-        
-        const dx = node.x - this.mouse.x;
-        const dy = node.y - this.mouse.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < this.mouseRadius) {
-          return 1 + (1 - distance / this.mouseRadius) * 2.5; // Stronger effect
-        }
-        return 1;
-      }
-      
-      getConnectionOpacity(node1, node2) {
-        const dx = node1.x - node2.x;
-        const dy = node1.y - node2.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance > this.maxDistance) return 0;
-        
-        let opacity = (1 - distance / this.maxDistance) * 0.4; // Base opacity for denser mesh
-        
-        // Boost opacity if near mouse
-        if (this.isMouseInside) {
-          const midX = (node1.x + node2.x) / 2;
-          const midY = (node1.y + node2.y) / 2;
-          const mouseDx = midX - this.mouse.x;
-          const mouseDy = midY - this.mouse.y;
-          const mouseDistance = Math.sqrt(mouseDx * mouseDx + mouseDy * mouseDy);
-          
-          if (mouseDistance < this.mouseRadius) {
-            const mouseEffect = 1 - mouseDistance / this.mouseRadius;
-            opacity += mouseEffect * 1.2; // Stronger mouse effect
-          }
-        }
-        
-        return Math.min(opacity, 1);
-      }
-      
-      drawConnections() {
-        if (!this.ctx) return;
-        
-        for (let i = 0; i < this.nodes.length; i++) {
-          for (let j = i + 1; j < this.nodes.length; j++) {
-            const opacity = this.getConnectionOpacity(this.nodes[i], this.nodes[j]);
-            
-            if (opacity > 0.05) { // Lower threshold for more visible connections
-              const gradient = this.ctx.createLinearGradient(
-                this.nodes[i].x, this.nodes[i].y,
-                this.nodes[j].x, this.nodes[j].y
-              );
-              
-              const color1 = `rgba(135, 206, 250, ${opacity})`;
-              const color2 = `rgba(100, 149, 237, ${opacity * 0.8})`;
-              
-              gradient.addColorStop(0, color1);
-              gradient.addColorStop(0.5, `rgba(173, 216, 230, ${opacity * 0.9})`);
-              gradient.addColorStop(1, color2);
-              
-              this.ctx.strokeStyle = gradient;
-              this.ctx.lineWidth = opacity * 1.2; // Slightly thinner lines for denser mesh
-              this.ctx.globalAlpha = opacity;
-              
-              this.ctx.beginPath();
-              this.ctx.moveTo(this.nodes[i].x, this.nodes[i].y);
-              this.ctx.lineTo(this.nodes[j].x, this.nodes[j].y);
-              this.ctx.stroke();
-            }
-          }
-        }
-      }
-      
-      drawNodes() {
-        if (!this.ctx) return;
-        
-        this.nodes.forEach(node => {
-          const brightness = this.getNodeBrightness(node);
-          const finalOpacity = Math.max(0, Math.min(1, node.currentOpacity * brightness));
-          
-          // Node glow
-          const gradient = this.ctx.createRadialGradient(
-            node.x, node.y, 0,
-            node.x, node.y, node.radius * 3.5
-          );
-          
-          if (brightness > 1.5) {
-            gradient.addColorStop(0, `rgba(255, 255, 255, ${finalOpacity})`);
-            gradient.addColorStop(0.2, `rgba(135, 206, 250, ${finalOpacity * 0.9})`);
-            gradient.addColorStop(0.6, `rgba(100, 149, 237, ${finalOpacity * 0.5})`);
-            gradient.addColorStop(1, 'rgba(100, 149, 237, 0)');
-          } else {
-            gradient.addColorStop(0, `rgba(173, 216, 230, ${finalOpacity})`);
-            gradient.addColorStop(0.3, `rgba(135, 206, 250, ${finalOpacity * 0.8})`);
-            gradient.addColorStop(1, 'rgba(100, 149, 237, 0)');
-          }
-          
-          this.ctx.fillStyle = gradient;
-          this.ctx.globalAlpha = 1;
-          
-          this.ctx.beginPath();
-          this.ctx.arc(node.x, node.y, node.radius * (brightness > 1.5 ? 2.5 : 1.8), 0, Math.PI * 2);
-          this.ctx.fill();
-          
-          // Core node
-          this.ctx.fillStyle = brightness > 1.5 ? 
-            `rgba(255, 255, 255, ${finalOpacity})` : 
-            `rgba(173, 216, 230, ${finalOpacity})`;
-          this.ctx.beginPath();
-          this.ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-          this.ctx.fill();
-        });
-      }
-      
-      draw() {
-        if (!this.ctx || !this.canvas) return;
-        
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawConnections();
-        this.drawNodes();
-      }
-      
-      animate() {
-        if (!mountedRef.current) return;
-        
-        this.updateNodes();
-        this.draw();
-        this.animationFrame = requestAnimationFrame(() => this.animate());
-      }
-      
-      destroy() {
-        if (this.animationFrame) {
-          cancelAnimationFrame(this.animationFrame);
-        }
-        
-        if (this.footerElement) {
-          this.footerElement.removeEventListener('mousemove', this.mouseMoveHandler);
-          this.footerElement.removeEventListener('mouseenter', this.mouseEnterHandler);
-          this.footerElement.removeEventListener('mouseleave', this.mouseLeaveHandler);
-        }
-        
-        if (this.resizeHandler) {
-          window.removeEventListener('resize', this.resizeHandler);
-        }
-      }
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
     }
+  };
 
-    // Initialize the network with a small delay to ensure DOM is ready
-    const initNetwork = () => {
-      if (canvasRef.current && overlayRef.current && footerRef.current && mountedRef.current) {
-        try {
-          networkRef.current = new NetworkMesh(canvasRef.current, overlayRef.current, footerRef.current);
-        } catch (error) {
-          console.error('Error initializing network mesh:', error);
-        }
-      }
-    };
+  const handleNavClick = (e, sectionId) => {
+    e.preventDefault();
+    
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Wait a bit for navigation to complete, then scroll
+      setTimeout(() => {
+        scrollToSection(sectionId);
+      }, 300);
+    } else {
+      // If we're already on home page, just scroll
+      scrollToSection(sectionId);
+    }
+  };
 
-    const timeoutId = setTimeout(initNetwork, 100);
-
-    return () => {
-      mountedRef.current = false;
-      clearTimeout(timeoutId);
-      if (networkRef.current) {
-        networkRef.current.destroy();
-      }
-    };
-  }, []);
+  const handleContactClick = () => {
+    navigate('/contact');
+  };
 
   return (
-    <footer ref={footerRef} className="footer">
-      <div className="footer-background">
-        <canvas ref={canvasRef} className="network-canvas"></canvas>
-        <div ref={overlayRef} className="brightness-overlay"></div>
-      </div>
-      
+    <footer className="footer">
       <div className="footer-content">
         <div className="footer-left">
           <div className="footer-logo">
@@ -360,18 +85,18 @@ const Footer = () => {
           <div className="footer-section company-links">
             <h3>Company</h3>
             <ul>
-              <li><a href="#home">Home</a></li>
-              <li><a href="#story">Our Story</a></li>
-              <li><a href="#products">Products</a></li>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#awards">Awards & Research</a></li>
+              <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
+              <li><a href="#story" onClick={(e) => handleNavClick(e, 'story')}>Our Story</a></li>
+              <li><a href="#products" onClick={(e) => handleNavClick(e, 'products')}>Products</a></li>
+              <li><a href="#services" onClick={(e) => handleNavClick(e, 'services')}>Services</a></li>
+              <li><a href="#blog" onClick={(e) => handleNavClick(e, 'blog')}>Blog</a></li>
+              <li><a href="#awards" onClick={(e) => handleNavClick(e, 'awards')}>Awards & Research</a></li>
             </ul>
           </div>
           
           <div className="footer-newsletter">
             <h3>Join Our Newsletter</h3>
-            <button className="contact-btn">Contact Now</button>
+            <button className="contact-btn" onClick={handleContactClick}>Contact Now</button>
             
             <div className="social-icons">
               <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Facebook">

@@ -1,10 +1,11 @@
-/* CertificationsSection.css */
+/* CertificationsSection.css - Fixed to stay below navbar */
 .certifications-section {
   background: #000426;
   padding: 80px 0 120px 0;
   position: relative;
   overflow: hidden;
-  min-height: auto; /* Changed from 100vh to auto */
+  min-height: auto;
+  z-index: 1; /* Keep below navbar */
 }
 
 .certifications-container {
@@ -12,7 +13,7 @@
   margin: 0 auto;
   padding: 0 20px;
   position: relative;
-  z-index: 2;
+  z-index: 2; /* Higher than section but below navbar */
 }
 
 .certifications-title {
@@ -20,13 +21,15 @@
   font-size: 48px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: -0.5px;
   background: linear-gradient(135deg, #ffffff 0%, #b8c6db 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  z-index: 3; /* Below navbar */
 }
 
 .certifications-description {
@@ -39,6 +42,8 @@
   margin-left: auto;
   margin-right: auto;
   font-weight: 400;
+  position: relative;
+  z-index: 3; /* Below navbar */
 }
 
 .certifications-grid {
@@ -46,6 +51,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-bottom: 80px;
+  position: relative;
+  z-index: 3; /* Below navbar */
 }
 
 .certification-card {
@@ -56,17 +63,19 @@
   );
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 20px;
-  padding: 40px 30px;
+  padding: 30px 25px; /* Reduced padding to accommodate larger images */
   text-align: center;
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
-  height: 280px;
+  height: 350px; /* Increased height to accommodate larger images */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between; /* Changed to space-between for better alignment */
   align-items: center;
+  z-index: 4; /* Below navbar but above other content */
+  cursor: pointer;
 }
 
 .certification-card::before {
@@ -86,34 +95,45 @@
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
+  z-index: 1; /* Relative to card */
 }
 
 .certification-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-15px) scale(1.03);
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.08) 100%
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.12) 100%
   );
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4),
+    0 10px 25px rgba(255, 255, 255, 0.1);
+  z-index: 5; /* Still below navbar even on hover */
+}
+
+.certification-card:hover .certification-image {
+  transform: scale(1.1);
+}
+
+.certification-card:hover .certification-year {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .certification-badge {
-  width: 80px;
-  height: 80px;
-  margin: 0 auto 20px;
-  background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
-  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 0%;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+  z-index: 2; /* Relative to card */
+  margin-bottom: 20px;
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .certification-badge::before {
-  content: "CERTIFIED";
   position: absolute;
   color: white;
   font-size: 10px;
@@ -121,18 +141,23 @@
   letter-spacing: 0.5px;
   text-align: center;
   line-height: 1.2;
+  z-index: 1; /* Relative to badge */
 }
 
 .certification-year {
   color: #ffffff;
   font-size: 42px;
   font-weight: 800;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #ffffff 0%, #e0e6ed 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  position: relative;
+  z-index: 2; /* Relative to card */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .certification-text {
@@ -141,6 +166,14 @@
   font-weight: 500;
   line-height: 1.4;
   margin: 0;
+  position: relative;
+  z-index: 2; /* Relative to card */
+  text-align: center;
+  max-width: 220px; /* Constrain width for better alignment */
+  min-height: 44px; /* Ensure consistent height for alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Stats Section - Renamed to avoid conflicts */
@@ -154,6 +187,8 @@
     transparent 100%
   );
   margin: 60px 0;
+  position: relative;
+  z-index: 3; /* Below navbar */
 }
 
 .certifications-stats-grid {
@@ -161,6 +196,8 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 60px;
   text-align: center;
+  position: relative;
+  z-index: 3; /* Below navbar */
 }
 
 .certification-stat-item {
@@ -169,6 +206,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 4; /* Below navbar but above other content */
 }
 
 .certification-stat-number {
@@ -189,9 +227,8 @@
   align-items: center;
   justify-content: center;
   min-height: 120px;
-  animation: countUp 2s ease-out forwards;
-  transform: translateY(20px);
-  opacity: 0;
+  position: relative;
+  z-index: 1; /* Relative to stat item */
 }
 
 .certification-stat-label {
@@ -202,9 +239,11 @@
   letter-spacing: 1px;
   text-align: center;
   margin-top: 10px;
+  position: relative;
+  z-index: 1; /* Relative to stat item */
 }
 
-/* Counter Animation */
+/* Counter Animation - now can be triggered multiple times */
 @keyframes countUp {
   0% {
     opacity: 0;
@@ -220,9 +259,22 @@
   }
 }
 
-/* Trigger animation when in view */
-.certification-stat-item.animate .certification-stat-number {
-  animation: countUp 2s ease-out forwards;
+/* Pulse animation for numbers when they reset */
+@keyframes numberPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Enhanced hover effects for better interactivity */
+.certification-stat-item:hover .certification-stat-number {
+  animation: numberPulse 0.6s ease-in-out;
 }
 
 /* Fallback for browsers that don't support -webkit-background-clip */
@@ -230,6 +282,28 @@
   .certification-stat-number {
     color: #60a5fa;
   }
+}
+
+/* Default certification image size */
+.certification-image {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  border-radius: 0%;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Larger images for cards 1 and 2 to match card 3 size */
+.certification-card:nth-child(1) .certification-image {
+  width: 260px;
+  height: 260px;
+}
+
+.certification-card:nth-child(2) .certification-image {
+  width: 220px;
+  height: 220px;
 }
 
 /* Responsive Design */
@@ -246,7 +320,29 @@
 
 @media (max-width: 768px) {
   .certifications-section {
-    padding: 40px 0 60px 0; /* Reduced padding */
+    padding: 40px 0 60px 0;
+  }
+
+  .certification-image {
+    width: 120%; /* Significantly increased */
+    height: 120%; /* Significantly increased */
+    max-width: 180px; /* Larger max constraint */
+    max-height: 180px; /* Larger max constraint */
+  }
+
+  /* Larger images for cards 1 and 2 on mobile */
+  .certification-card:nth-child(1) .certification-image {
+    width: 220%; /* Extra large for card 1 */
+    height: 220%;
+    max-width: 280px;
+    max-height: 280px;
+  }
+
+  .certification-card:nth-child(2) .certification-image {
+    width: 180%; /* Even larger for card 2 */
+    height: 180%;
+    max-width: 240px;
+    max-height: 240px;
   }
 
   .certifications-title {
@@ -265,9 +361,9 @@
   }
 
   .certification-card {
-    height: 200px; /* Reduced height */
+    height: 260px; /* Significantly increased from 220px */
     padding: 20px 15px;
-    margin: 0 10px; /* Add side margins */
+    margin: 0 10px;
   }
 
   /* 1x3 grid for stats as requested */
@@ -288,7 +384,29 @@
 
 @media (max-width: 480px) {
   .certifications-section {
-    padding: 30px 0 40px 0; /* Minimal padding */
+    padding: 30px 0 40px 0;
+  }
+
+  .certification-image {
+    width: 140%; /* Much larger */
+    height: 140%; /* Much larger */
+    max-width: 160px; /* Increased max size */
+    max-height: 160px; /* Increased max size */
+  }
+
+  /* Even larger images for cards 1 and 2 on small mobile */
+  .certification-card:nth-child(1) .certification-image {
+    width: 240%; /* Extra large for card 1 */
+    height: 240%;
+    max-width: 260px;
+    max-height: 260px;
+  }
+
+  .certification-card:nth-child(2) .certification-image {
+    width: 200%; /* Much larger for card 2 */
+    height: 200%;
+    max-width: 220px;
+    max-height: 220px;
   }
 
   .certifications-container {
@@ -312,28 +430,26 @@
   }
 
   .certification-card {
-    height: 180px;
+    height: 240px; /* Significantly increased from 200px */
     padding: 15px 10px;
     margin: 0 5px;
   }
 
   .certification-badge {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-  }
-
-  .certification-badge::before {
-    font-size: 8px;
+    width: 100px; /* Proportionally scaled for mobile */
+    height: 100px; /* Proportionally scaled for mobile */
+    margin-bottom: 15px;
   }
 
   .certification-year {
-    font-size: 28px;
-    margin-bottom: 8px;
+    font-size: 24px; /* Reduced from 28px to save space */
+    margin-bottom: 5px; /* Reduced margin */
   }
 
   .certification-text {
-    font-size: 12px;
+    font-size: 11px; /* Slightly reduced from 12px */
+    line-height: 1.3; /* Tighter line height */
+    padding: 0 5px; /* Add horizontal padding */
   }
 
   /* 1x3 stats grid - perfectly fit to screen width */
@@ -348,14 +464,14 @@
   }
 
   .certification-stat-number {
-    font-size: 36px; /* Much smaller numbers */
+    font-size: 36px;
     min-height: 40px;
     line-height: 1;
     margin-bottom: 8px;
   }
 
   .certification-stat-label {
-    font-size: 9px; /* Small labels */
+    font-size: 9px;
     margin-top: 5px;
     line-height: 1.2;
   }
@@ -372,11 +488,53 @@
     min-height: 35px;
   }
 
+  .certification-image {
+    width: 130%; /* Much larger than before */
+    height: 130%; /* Much larger than before */
+    max-width: 140px; /* Larger max size */
+    max-height: 140px; /* Larger max size */
+  }
+
+  /* Maintain larger size for cards 1 and 2 on extra small screens */
+  .certification-card:nth-child(1) .certification-image {
+    width: 220%; /* Extra large for card 1 */
+    height: 220%;
+    max-width: 240px;
+    max-height: 240px;
+  }
+
+  .certification-card:nth-child(2) .certification-image {
+    width: 190%; /* Larger for card 2 */
+    height: 190%;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
   .certification-stat-label {
     font-size: 8px;
   }
 
   .certification-card {
     margin: 0 3px;
+    height: 220px; /* Increased height for extra small screens */
   }
+
+  .certification-year {
+    font-size: 20px; /* Further reduced for smallest screens */
+    margin-bottom: 3px;
+  }
+
+  .certification-text {
+    font-size: 10px; /* Smaller text for smallest screens */
+    line-height: 1.2;
+    padding: 0 3px;
+  }
+}
+
+/* Ensure all elements in certifications section stay below navbar */
+.certifications-section *,
+.certifications-section *::before,
+.certifications-section *::after {
+  z-index: inherit;
+  max-z-index: 100; /* Never exceed this value */
 }

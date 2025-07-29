@@ -1,8 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/CertificationsSection.css';
 
+import dpiitImg from '../assets/dpiitw.png';
+import gokImg from '../assets/gokw.png';
+import dunImg from '../assets/dun.png';
+
 const CertificationsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [animationKey, setAnimationKey] = useState(0);
   const sectionRef = useRef(null);
 
   // Animation on scroll
@@ -12,6 +17,9 @@ const CertificationsSection = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          setAnimationKey(prev => prev + 1);
+        } else {
+          setIsVisible(false);
         }
       },
       {
@@ -34,31 +42,36 @@ const CertificationsSection = () => {
   // Counter animation hook
   const useCounter = (end, duration = 2000, start = 0) => {
     const [count, setCount] = useState(start);
-    const hasStarted = useRef(false);
 
     useEffect(() => {
-      if (!isVisible || hasStarted.current) return;
+      if (!isVisible) {
+        setCount(start);
+        return;
+      }
 
-      hasStarted.current = true;
       let startTimestamp = null;
+      let animationId = null;
       
       const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        
-        // Use easeOut animation curve for smoother animation
         const easeOut = 1 - Math.pow(1 - progress, 3);
         const currentCount = Math.floor(easeOut * (end - start) + start);
         setCount(currentCount);
-        
         if (progress < 1) {
-          window.requestAnimationFrame(step);
+          animationId = window.requestAnimationFrame(step);
         }
       };
       
-      window.requestAnimationFrame(step);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isVisible]); // Only depend on isVisible for triggering animation
+      animationId = window.requestAnimationFrame(step);
+
+      return () => {
+        if (animationId) {
+          window.cancelAnimationFrame(animationId);
+        }
+      };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isVisible, animationKey, end, duration, start]);
 
     return count;
   };
@@ -69,18 +82,18 @@ const CertificationsSection = () => {
 
   const certifications = [
     {
-      year: '2024',
-      title: 'Certificate of Excellence in Product Design',
+      year: '2023',
+      title: 'DPIIT - Startup India Recognition',
       id: 1
     },
     {
-      year: '2024',
-      title: 'Certificate of Appreciation - MAHE Research Day',
+      year: '2025',
+      title: 'Government of Karnataka - Startup Recognition',
       id: 2
     },
     {
-      year: '2024',
-      title: 'Certificate of Appreciation - MAHE Research Day',
+      year: '2025',
+      title: 'DUN & BRADSTREET - Startup Recognition',
       id: 3
     }
   ];
@@ -128,8 +141,17 @@ const CertificationsSection = () => {
               }}
             >
               <div className="certification-badge">
-                {/* Placeholder for certification sticker image */}
-                {/* <img src="/assets/certified-sticker.png" alt="Certified" /> */}
+                <img
+                  src={
+                    cert.id === 1
+                      ? dpiitImg
+                      : cert.id === 2
+                      ? gokImg
+                      : dunImg
+                  }
+                  alt={cert.title}
+                  className="certification-image"
+                />
               </div>
               
               <div className="certification-year">
@@ -143,14 +165,12 @@ const CertificationsSection = () => {
           ))}
         </div>
 
-        {/* Updated class name to avoid conflicts */}
         <div className="certifications-stats-divider"></div>
 
-        {/* Updated class name to avoid conflicts */}
         <div className="certifications-stats-grid">
           {stats.map((stat, index) => (
             <div 
-              key={stat.id}
+              key={`${stat.id}-${animationKey}`}
               className="certification-stat-item"
               style={{
                 animationDelay: isVisible ? `${(index + 3) * 0.2}s` : '0s',

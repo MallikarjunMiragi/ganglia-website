@@ -1,6 +1,10 @@
 .footer {
   position: relative;
-  background: linear-gradient(135deg, #000426 0%, #000639 50%, #000426 100%);
+  background: url("../assets/footerbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   color: white;
   padding: 60px 0;
   overflow: hidden;
@@ -8,40 +12,20 @@
   min-height: 400px;
 }
 
-.footer-background {
+.footer::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* This allows clicks to pass through to footer content */
+  right: 0;
+  bottom: 0;
+  background: url("../assets/footerbg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  opacity: 0.9; /* Increased opacity for better visibility */
   z-index: 1;
-}
-
-.network-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none; /* Canvas doesn't block interactions */
-  z-index: 1;
-}
-
-.brightness-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(100, 149, 237, 0) 0%,
-    rgba(100, 149, 237, 0) 100%
-  );
-  transition: all 0.3s ease;
-  z-index: 2;
 }
 
 .footer-content {
@@ -51,20 +35,22 @@
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Changed from space-between to flex-start */
   align-items: flex-start;
-  gap: 60px;
+  gap: 80px; /* Increased gap for better spacing */
 }
 
 .footer-left {
   flex: 0 0 auto;
+  margin-left: -150px; /* Move content slightly left - DESKTOP CHANGE */
 }
 
 .footer-logo img {
-  width: 200px;
+  width: 300px; /* DESKTOP CHANGE - increased from 200px */
   height: auto;
   filter: brightness(1.1);
   transition: all 0.3s ease;
+  margin-top: 50px; /* DESKTOP CHANGE - added margin-top */
 }
 
 .footer-logo:hover img {
@@ -77,6 +63,8 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  margin-left: 60px; /* DESKTOP CHANGE - increased from -40px */
+  margin-right: -80px; /* DESKTOP CHANGE - added margin-right */
 }
 
 .headquarters h3 {
@@ -93,6 +81,7 @@
   color: rgba(255, 255, 255, 0.9);
   margin: 4px 0;
   transition: color 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added for better readability */
 }
 
 .headquarters:hover p {
@@ -124,8 +113,9 @@
   height: 40px;
   background: rgba(100, 149, 237, 0.2);
   border-radius: 8px;
-  color: #6495ed;
+  color: #fef155;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px); /* Added glassmorphism effect */
 }
 
 .contact-item:hover .contact-icon {
@@ -139,12 +129,14 @@
   font-weight: 600;
   margin-bottom: 4px;
   color: #ffffff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added for better readability */
 }
 
 .contact-details p {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.9);
   transition: color 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added for better readability */
 }
 
 .contact-item:hover .contact-details p {
@@ -154,8 +146,14 @@
 .footer-right {
   flex: 0 0 auto;
   display: flex;
-  flex-direction: column;
-  gap: 40px;
+  gap: 80px; /* Add gap between company links and newsletter */
+  align-items: flex-start;
+  margin-right: -100px; /* DESKTOP CHANGE - added margin-right */
+}
+
+.company-links {
+  flex: 0 0 auto;
+  margin-left: -100px; /* DESKTOP CHANGE - added margin-left */
 }
 
 .company-links h3 {
@@ -183,6 +181,7 @@
   transition: all 0.3s ease;
   position: relative;
   padding-left: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Added for better readability */
 }
 
 .company-links a::before {
@@ -198,13 +197,21 @@
 }
 
 .company-links a:hover {
-  color: #6495ed;
+  color: #fef155;
   text-shadow: 0 0 10px rgba(100, 149, 237, 0.5);
   padding-left: 25px;
 }
 
 .company-links a:hover::before {
   width: 15px;
+}
+
+.footer-newsletter {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  margin-right: -50px; /* DESKTOP CHANGE - added margin-right */
 }
 
 .footer-newsletter h3 {
@@ -216,23 +223,24 @@
 }
 
 .contact-btn {
-  background: linear-gradient(135deg, #6495ed 0%, #4169e1 50%, #1e3a8a 100%);
-  color: white;
+  background-color: #fef155;
+  color: rgb(0, 0, 0);
   border: none;
   padding: 14px 32px;
   font-size: 16px;
   font-weight: 600;
-  border-radius: 25px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(100, 149, 237, 0.3);
   margin-bottom: 30px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  backdrop-filter: blur(10px); /* Added glassmorphism effect */
 }
 
 .contact-btn:hover {
-  background: linear-gradient(135deg, #4169e1 0%, #1e3a8a 50%, #1e40af 100%);
+  background-color: #ffffff;
   transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(100, 149, 237, 0.5);
 }
@@ -263,15 +271,23 @@
 
 .social-icon:hover {
   background: rgba(100, 149, 237, 0.3);
-  color: #ffffff;
+  color: #fef155;
   transform: translateY(-3px) scale(1.1);
   box-shadow: 0 8px 25px rgba(100, 149, 237, 0.4);
 }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
+  .footer {
+    background-attachment: scroll; /* Fixed attachment can cause issues on mobile */
+  }
+
   .footer-content {
-    gap: 30px;
+    gap: 40px;
+  }
+
+  .footer-right {
+    gap: 40px;
   }
 
   .footer-contact {
@@ -286,20 +302,37 @@
 @media (max-width: 768px) {
   .footer {
     padding: 40px 0;
+    background-attachment: scroll;
   }
 
   .footer-content {
     gap: 15px;
     padding: 0 10px;
+    flex-direction: column; /* Stack vertically on mobile */
+    justify-content: center; /* Center content on mobile */
+    align-items: center; /* Center align items */
   }
 
   .footer-left {
-    display: none;
+    margin-left: 0; /* Reset desktop margin changes for mobile */
+    display: none; /* Keep original mobile behavior */
   }
 
   .footer-center {
-    flex: 1;
-    min-width: 0;
+    margin-left: 0; /* Reset desktop margin changes for mobile */
+    margin-right: 0; /* Reset desktop margin changes for mobile */
+    width: 100%; /* Full width on mobile */
+    text-align: center; /* Center text on mobile */
+  }
+
+  .footer-right {
+    flex-direction: row; /* Keep horizontal layout on mobile */
+    gap: 20px; /* Reduced gap for mobile */
+    justify-content: space-between; /* Distribute space between company and newsletter */
+    padding-left: 0; /* Remove left padding */
+    margin-right: 0; /* Reset desktop margin changes for mobile */
+    width: 100%; /* Full width on mobile */
+    max-width: 400px; /* Limit max width for better mobile layout */
   }
 
   .headquarters h3 {
@@ -343,9 +376,11 @@
     word-break: break-all;
   }
 
-  .footer-right {
+  .company-links {
     flex: 0 0 auto;
-    min-width: 0;
+    min-width: 120px; /* Ensure minimum width for company section */
+    margin-left: 0; /* Reset desktop margin changes for mobile */
+    text-align: left; /* Left align company links */
   }
 
   .company-links h3 {
@@ -361,15 +396,27 @@
     margin-bottom: 6px;
   }
 
+  .footer-newsletter {
+    flex: 0 0 auto;
+    min-width: 140px; /* Ensure minimum width for newsletter section */
+    margin-left: 0; /* Reset left margin */
+    margin-right: 0; /* Reset desktop margin changes for mobile */
+    text-align: center; /* Center align newsletter section */
+  }
+
   .footer-newsletter h3 {
     font-size: 18px;
     margin-bottom: 18px;
+    margin-left: 0; /* Reset left margin */
   }
 
   .contact-btn {
     padding: 8px 16px;
     font-size: 11px;
     margin-bottom: 20px;
+    width: 100%; /* Make button full width of its container */
+    max-width: 140px; /* Limit maximum width */
+    margin-left: 0; /* Reset left margin */
   }
 
   .social-icon {
@@ -384,17 +431,47 @@
 
   .social-icons {
     gap: 8px;
+    margin-left: 0; /* Reset left margin */
+    justify-content: center; /* Center social icons */
   }
 }
 
 @media (max-width: 480px) {
   .footer {
     padding: 30px 0;
+    background-attachment: scroll;
   }
 
   .footer-content {
     gap: 15px;
     padding: 0 10px;
+    flex-direction: column; /* Stack vertically */
+    align-items: center; /* Center align items */
+  }
+
+  .footer-right {
+    flex-direction: row; /* Keep horizontal layout even on smallest screens */
+    gap: 15px;
+    justify-content: space-between;
+    padding-left: 0; /* Reset padding */
+    margin-right: 0; /* Reset desktop margin changes for mobile */
+    width: 100%; /* Full width */
+    max-width: 350px; /* Limit max width for smaller screens */
+  }
+
+  .company-links {
+    flex: 0 0 auto;
+    min-width: 100px;
+    margin-left: 0; /* Reset desktop margin changes for mobile */
+    text-align: left; /* Left align */
+  }
+
+  .footer-newsletter {
+    flex: 0 0 auto;
+    min-width: 120px;
+    margin-left: 0; /* Reset left margin */
+    margin-right: 0; /* Reset desktop margin changes for mobile */
+    text-align: center; /* Center align */
   }
 
   .footer-logo img {
@@ -448,12 +525,14 @@
   .footer-newsletter h3 {
     font-size: 16px;
     margin-bottom: 15px;
+    margin-left: 0; /* Reset left margin */
   }
 
   .contact-btn {
     padding: 8px 20px;
     font-size: 12px;
     margin-bottom: 15px;
+    margin-left: 0; /* Reset left margin */
   }
 
   .social-icon {
@@ -468,5 +547,7 @@
 
   .social-icons {
     gap: 10px;
+    margin-left: 0; /* Reset left margin */
+    justify-content: center; /* Center social icons */
   }
 }
